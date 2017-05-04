@@ -16,13 +16,17 @@ using Newtonsoft.Json;
 
 namespace Chroma.NetCore.Api
 {
-    public class ChromaHttpClient : IClient
+    internal class ChromaHttpClient : IClient
     {
 
         private HttpClient httpClient;
         private Timer heartbeatTimer;
 
         private string sessionId;
+        
+        public IDevice CallingDevice { get; set; }
+
+        public event Action<HttpStatusCode, string, string> ClientMessage = delegate { };
 
         public ClientConfiguration ClientConfiguration { get; private set; }
 
@@ -57,8 +61,11 @@ namespace Chroma.NetCore.Api
         {
             var registerMessage = new RegisterMessage(jsonMessage);
             var response = await Request(registerMessage);
-            
+           
             var result = JsonConvert.DeserializeObject<Dictionary<string, string>>(response, new JsonSerializerSettings());
+             
+            if(!result.ContainsKey("sessionid"))
+                throw new ChromaNetCoreApiException($"Error when register API client: {response}");
 
             sessionId = result["sessionid"];
             var newExposedBaseAddress = new Uri(result["uri"]);
@@ -74,7 +81,7 @@ namespace Chroma.NetCore.Api
             heartbeatTimer = new Timer(async state =>
             {
                 await Heartbeat();
-            }, null, 5000, 1000);
+            }, null, 10000, 1000);
             
             return sessionId;
         }
@@ -140,26 +147,10 @@ namespace Chroma.NetCore.Api
 
             var responseString = await responseMessage.Content.ReadAsStringAsync();
 
+            //fire event with response message
+            ClientMessage(responseMessage.StatusCode, requestMessage.Device.Device ?? "n/a", responseString);
+
             return responseString;
-        }
-
-        #endregion
-
-        #region Devices
-
-
-        public async Task<string> Headset()
-        {
-            var device = new Headset();
-
-            device.SetStatic(Color.Blue);
-
-            var headsetMessage = new DeviceMessage(device);
-            var response = await Request(headsetMessage);
-
-            var result = JsonConvert.DeserializeObject<Dictionary<string, string>>(response, new JsonSerializerSettings());
-
-            return result["result"];
         }
 
         #endregion

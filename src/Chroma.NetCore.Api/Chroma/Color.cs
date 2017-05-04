@@ -49,7 +49,7 @@ namespace Chroma.NetCore.Api.Chroma
         public static Color Yellow = new Color(255, 255, 0);
 
 
-        private string ToRgb()
+        public string ToRgb()
         {
             if (string.IsNullOrEmpty(color))
                 return $"{r} {g} {b}";
@@ -66,9 +66,27 @@ namespace Chroma.NetCore.Api.Chroma
             return $"{r} {g} {b}";
         }
 
+        /// <summary>
+        /// Convert color to BGR scheme.
+        /// </summary>
+        /// <returns>BGR value as int.</returns>
         public int ToBgr()
         {
-            return 0xAA00FF;
+            var rHex = this.r.ToString("X");
+            if (rHex.Length < 2) rHex = "0" + rHex;
+            var gHex = this.g.ToString("X");
+            if (gHex.Length < 2) gHex = "0" + gHex;
+            var bHex = this.b.ToString("X");
+            if (bHex.Length < 2) bHex = "0" + bHex;
+
+            var result = bHex + gHex + rHex;
+           
+            //if (this.isKey)
+            //{
+            //    result = "ff" + result;
+            //}
+
+            return int.Parse(result, NumberStyles.HexNumber);
         }
 
         public override string ToString()

@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using Chroma.NetCore.Api.Interfaces;
 using Chroma.NetCore.Tests.Base;
 using Xunit;
 
@@ -28,6 +29,7 @@ namespace Chroma.NetCore.Api.Tests
 
 
             chromaHttpClient = chromaHttpClient ?? new ChromaHttpClient();
+            chromaHttpClient.ClientMessage += (code, device, s) => Debug.WriteLine($"{code}:{device}:{s}");
             chromaHttpClient.Init(clientConfiguration);
         }
 
@@ -35,7 +37,7 @@ namespace Chroma.NetCore.Api.Tests
         public async void Unregister_ReturnResultString0()
         {
 
-            Assert.True(await Register_ReturnSessionId());
+            Assert.NotNull(await Register_ReturnRegisteredClient());
 
             var response = await chromaHttpClient.UnRegister();
 
@@ -46,7 +48,7 @@ namespace Chroma.NetCore.Api.Tests
         }
 
         [Fact]
-        public async Task<bool> Register_ReturnSessionId()
+        public async Task<IClient> Register_ReturnRegisteredClient()
         {
             var initMessage = File.ReadAllText(Path.Combine(testFilePath,"initMessage.json"));
 
@@ -56,24 +58,8 @@ namespace Chroma.NetCore.Api.Tests
 
             Debug.WriteLine("SessionId: " + response);
 
-            return true;
+            return chromaHttpClient;
         }
-
-
-        [Fact]
-        public async void Headset_ReturnResultString0()
-        {
-            Assert.True(await Register_ReturnSessionId());
-
-            var response = await chromaHttpClient.Headset();
-
-            Assert.IsType<int>(Convert.ToInt32(response));
-            var resultCode = Convert.ToInt32(response);
-
-            Assert.IsType<int>(resultCode);
-            Assert.True(resultCode == 0);
-        }
-
 
 
     }

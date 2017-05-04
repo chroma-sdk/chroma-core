@@ -5,7 +5,7 @@ using Chroma.NetCore.Api.Chroma;
 
 namespace Chroma.NetCore.Api.Interfaces
 {
-    interface IDeviceData
+    internal interface IDeviceData
     {
         dynamic EffectData { get; }
     }

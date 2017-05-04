@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Chroma.NetCore.Api.Chroma;
 
 namespace Chroma.NetCore.Api.Interfaces
@@ -14,13 +15,16 @@ namespace Chroma.NetCore.Api.Interfaces
         Effect ActiveEffect { get; }
         string EffectId { get; }
 
+        dynamic EffectData { get; set; }
+
+
         #endregion
 
         #region Methods
 
-        void SetStatic(Color color);
-        void SetAll(Color color);
-        void SetNone();
+        Task SetStatic(Color color);
+        Task SetAll(Color color);
+        Task SetNone();
 
         #endregion
 

@@ -4,6 +4,8 @@ namespace Chroma.NetCore.Api.Interfaces
 {
     public interface IHttpRequestMessage
     {
+        IDevice Device { get; }
+
         Enums.HttpMessageMethod HttpMessageMethod { get; }
         string UrlPath { get; }
 

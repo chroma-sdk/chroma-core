@@ -6,11 +6,11 @@ using Chroma.NetCore.Api.Interfaces;
 
 namespace Chroma.NetCore.Api.Devices
 {
-    public class Keyboard : DeviceBase
+    public class Mouse : DeviceBase
     {
-        public override string Device => "keyboard";
+        public override string Device => "mouse";
 
-        public Keyboard(IClient client) : base(client)
+        public Mouse(IClient client) : base(client)
         {
         }
     }

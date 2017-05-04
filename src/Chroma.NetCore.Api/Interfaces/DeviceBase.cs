@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Chroma.NetCore.Api.Chroma;
 using Chroma.NetCore.Api.Extensions;
+using Chroma.NetCore.Api.Messages;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -11,6 +13,8 @@ namespace Chroma.NetCore.Api.Interfaces
     public abstract class DeviceBase : IDevice, IDeviceData
     {
 
+        private IClient client;
+
         #region Properties
 
         public abstract string Device { get; }
@@ -18,36 +22,41 @@ namespace Chroma.NetCore.Api.Interfaces
         public Effect ActiveEffect { get; private set; }
         public string EffectId { get; }
 
-        public dynamic EffectData { get; private set; }
-
         #endregion
 
-        protected DeviceBase()
+        protected DeviceBase(IClient client)
         {
+            this.client = client;
             ActiveEffect = Effect.Undefined;
             EffectData = null;
         }
 
-        public void SetStatic(Color color)
+        public dynamic EffectData { get; set; }
+
+        public async Task SetStatic(Color color)
         {
-            SetDeviceEffect(Effect.ChromaStatic, color);
+            await SetDeviceEffect(Effect.ChromaStatic, color);
         }
 
-        public void SetAll(Color color)
+        public async Task SetAll(Color color)
         {
-            SetStatic(color);
+           await  SetStatic(color);
         }
 
-        public void SetNone()
+        public async Task SetNone()
         {
-           SetDeviceEffect(Effect.ChromaNone);
+           await SetDeviceEffect(Effect.ChromaNone);
         }
 
-        protected async void SetDeviceEffect(Effect effect, dynamic data = null)
+        protected async Task SetDeviceEffect(Effect effect, dynamic data = null)
         {
             this.ActiveEffect = effect;
             this.EffectData = GenerateMessage(data);
+            
+            var headsetMessage = new DeviceMessage(this);
+            var response = await client.Request(headsetMessage);
         }
+
 
         class Data
         {
