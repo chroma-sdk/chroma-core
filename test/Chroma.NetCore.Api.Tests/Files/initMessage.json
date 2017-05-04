@@ -1,0 +1,17 @@
+﻿{
+  "title": "Chroma Cloud Test Client",
+  "description": "The Chroma Cloud REST Client for Chroma SDK",
+  "author": {
+    "name": "Chroma Cloud",
+    "contact": "http://chroma.cloud"
+  },
+  "device_supported": [
+    "keyboard",
+    "mouse",
+    "headset",
+    "mousepad",
+    "keypad",
+    "chromalink"
+  ],
+  "category": "application"
+}
