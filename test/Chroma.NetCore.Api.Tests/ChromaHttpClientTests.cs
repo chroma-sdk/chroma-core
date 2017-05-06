@@ -12,7 +12,7 @@ namespace Chroma.NetCore.Api.Tests
     {
         private readonly string testFilePath;
 
-        private ClientConfiguration clientConfiguration;
+        private readonly ClientConfiguration clientConfiguration;
 
         private ChromaHttpClient chromaHttpClient;
 
