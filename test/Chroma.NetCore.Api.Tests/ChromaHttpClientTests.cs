@@ -16,7 +16,7 @@ namespace Chroma.NetCore.Api.Tests
 
         private ChromaHttpClient chromaHttpClient;
 
-        private readonly Uri baseUri = new Uri("http://localhost/");
+        private readonly Uri baseUri = new Uri("http://localhost.fiddler/");
 
         public ChromaHttpClientTests()
         {
@@ -60,6 +60,7 @@ namespace Chroma.NetCore.Api.Tests
 
             return chromaHttpClient;
         }
+
 
 
     }

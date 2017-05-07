@@ -9,10 +9,19 @@ namespace Chroma.NetCore.Api.Chroma
     public class DeviceContainer
     {
         private readonly IClient client;
+        public Keyboard Keyboard { get; }
+        public Headset Headset { get; }
+        public Mouse Mouse { get; }
+        public Mousepad Mousepad { get; }
+        public List<IDevice> Devices { get; }
 
         public DeviceContainer(IClient client)
         {
             this.client = client;
+            Keyboard = new Keyboard(client);
+            Headset = new Headset(client);
+            Mouse = new Mouse(client);
+            Mousepad = new Mousepad(client);
 
             Devices = new List<IDevice>()
             {
@@ -23,14 +32,6 @@ namespace Chroma.NetCore.Api.Chroma
             };
         }
 
-        public Keyboard Keyboard => new Keyboard(client);
-        public Headset Headset => new Headset(client);
-
-        public Mouse Mouse => new Mouse(client);
-
-        public Mousepad Mousepad => new Mousepad(client);
-
-        public List<IDevice> Devices  { get; }
         
         public void SetAll(Color color)
         {

@@ -71,7 +71,7 @@ namespace Chroma.NetCore.Api
             var newExposedBaseAddress = new Uri(result["uri"]);
 
 #if DEBUG
-            //newExposedBaseAddress = new Uri(result["uri"].Replace("localhost","localhost.fiddler"));
+            newExposedBaseAddress = new Uri(result["uri"].Replace("localhost","localhost.fiddler"));
 #endif
 
             ClientConfiguration.ExposedBaseAddress = newExposedBaseAddress;

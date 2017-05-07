@@ -95,7 +95,6 @@ namespace Chroma.NetCore.Api.Tests.Chroma
             var result = grid.ToJson();
             var matrix = JsonConvert.DeserializeObject<int[,]>(result);
             Assert.Equal(matrix[2,3], 16711680);
-
         }
 
     }

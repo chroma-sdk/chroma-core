@@ -8,7 +8,7 @@ namespace Chroma.NetCore.Api.Chroma
     {
         public int Rows { get; }
         public int Cols { get; }
-        private Color[,] Matrix { get; }
+        internal Color[][] Matrix { get; }
 
         private readonly Color intialColor;
 
@@ -17,17 +17,25 @@ namespace Chroma.NetCore.Api.Chroma
             Rows = rows;
             Cols = cols;
             this.intialColor = initialColor ?? Color.Black;
-            this.Matrix = new Color[rows,cols];
+            this.Matrix = new Color[rows][];
+            InitGrid();
         }
 
-
+        private void InitGrid()
+        {
+            for (int r = 0; r < Rows; r++)
+            {
+                Matrix[r] = new Color[Cols];
+            }
+        }
+        
         public bool SetPosition(int row, int col, Color color)
         {
             if (!CheckBounds(row, col))
                 return false;
 
             //Set color for position in matrix grid
-            Matrix[row, col] = color;
+            Matrix[row][col] = color;
 
             return true;
         }
@@ -39,7 +47,7 @@ namespace Chroma.NetCore.Api.Chroma
 
             for(int r = 0; r < Rows; r++)
             {
-                Matrix[r, col] = color;
+                Matrix[r][col] = color;
             }
 
             return true;
@@ -53,32 +61,39 @@ namespace Chroma.NetCore.Api.Chroma
 
             for (int c = 0; c < Cols; c++)
             {
-                Matrix[row, c] = color;
+                Matrix[row][c] = color;
             }
 
             return true;
         }
 
-        public string ToJson()
+        public int[][] ToMatrix()
         {
-            int [,] convertMatrix  = new int[Rows,Cols];
+            var convertedMatrix = new int[Rows][];
 
             for (int r = 0; r < Rows; r++)
             {
+                convertedMatrix[r] = new int[Cols];
+
                 for (int c = 0; c < Cols; c++)
                 {
-                    Matrix[r, c] = Matrix[r, c] ?? intialColor;
-                    convertMatrix[r, c] = Matrix[r, c].ToBgr();
+                    Matrix[r][c] = Matrix[r][c] ?? intialColor;
+                    convertedMatrix[r][c] = Matrix[r][c].ToBgr();
                 }
             }
 
-            var json = JsonConvert.SerializeObject(convertMatrix, Formatting.Indented);
+            return convertedMatrix;
+        }
+
+        public string ToJson()
+        {
+           var json = JsonConvert.SerializeObject(ToMatrix());
             return json;
         }
 
         public Color GetPosition(int row, int col)
         {
-            return !CheckBounds(row, col) ? null : Matrix[row, col];
+            return !CheckBounds(row, col) ? null : Matrix[row][col];
         }
 
         private bool CheckBounds(int row, int col)

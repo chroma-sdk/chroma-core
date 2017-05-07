@@ -80,6 +80,12 @@ namespace Chroma.NetCore.Api.Interfaces
                     message.Effect = ActiveEffect.GetStringValue();
                     message.Param = new { color = ((Color)data).ToBgr() };
                     break;
+
+                case Effect.ChromaCustom2:
+                case Effect.ChromaCustom:
+                    message.Effect = ActiveEffect.GetStringValue();
+                    message.Param = data;
+                    break;
             }
 
             var jsonString = JsonConvert.SerializeObject(message, Formatting.Indented,
