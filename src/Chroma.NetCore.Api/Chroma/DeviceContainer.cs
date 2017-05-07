@@ -18,7 +18,8 @@ namespace Chroma.NetCore.Api.Chroma
             {
                 Keyboard,
                 Headset,
-                Mouse
+                Mouse,
+                Mousepad
             };
         }
 
@@ -26,6 +27,8 @@ namespace Chroma.NetCore.Api.Chroma
         public Headset Headset => new Headset(client);
 
         public Mouse Mouse => new Mouse(client);
+
+        public Mousepad Mousepad => new Mousepad(client);
 
         public List<IDevice> Devices  { get; }
         

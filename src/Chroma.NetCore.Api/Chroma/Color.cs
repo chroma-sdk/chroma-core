@@ -91,7 +91,7 @@ namespace Chroma.NetCore.Api.Chroma
 
         public override string ToString()
         {
-            return color;
+            return ToBgr().ToString();
         }
     }
 }

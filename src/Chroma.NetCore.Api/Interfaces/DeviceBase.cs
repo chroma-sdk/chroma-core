@@ -58,7 +58,7 @@ namespace Chroma.NetCore.Api.Interfaces
         }
 
 
-        class Data
+        private class Data
         {
             public string Effect { get; set; }
             public dynamic Param { get; set; }
