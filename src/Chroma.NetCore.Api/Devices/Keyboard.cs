@@ -12,10 +12,11 @@ namespace Chroma.NetCore.Api.Devices
         public override string Device => "keyboard";
 
         public Grid Grid { get; }
-        public Grid Keys { get; }
+        private Grid Keys { get; }
 
-        private const int ROWS = 22;
-        private const int COLUMNS = 6;
+
+        private const int ROWS = 6;
+        private const int COLUMNS = 22;
 
         public Keyboard(IClient client) : base(client)
         {
@@ -27,6 +28,30 @@ namespace Chroma.NetCore.Api.Devices
         {
             return Grid.SetPosition(row, col, color);
         }
+
+        public bool SetKey(List<Key> keys, Color color)
+        {
+            var result = false;
+
+            foreach (var key in keys)
+            {
+                result = SetKey(key, color);
+
+                if (!result)
+                    return false;
+            }
+
+            return result;
+        }
+
+        public bool SetKey(Key key, Color color)
+        {
+            var row = (int)key >> 8;
+            var col = (int)key & 0xFF;
+
+            return SetPosition(row, col, color);
+        }
+
 
         public Task<string> SetDevice()
         {

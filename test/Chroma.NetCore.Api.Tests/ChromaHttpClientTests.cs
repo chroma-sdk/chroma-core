@@ -16,7 +16,7 @@ namespace Chroma.NetCore.Api.Tests
 
         private ChromaHttpClient chromaHttpClient;
 
-        private readonly Uri baseUri = new Uri("http://localhost.fiddler/");
+        private readonly Uri baseUri = new Uri("http://localhost/");
 
         public ChromaHttpClientTests()
         {
@@ -46,6 +46,7 @@ namespace Chroma.NetCore.Api.Tests
             Assert.IsType<int>(resultCode);
             Assert.True(resultCode == 0);
         }
+
 
         [Fact]
         public async Task<IClient> Register_ReturnRegisteredClient()

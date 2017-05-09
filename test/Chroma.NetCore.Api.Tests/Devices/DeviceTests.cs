@@ -7,6 +7,8 @@ namespace Chroma.NetCore.Api.Tests.Devices
 {
     public class DeviceTests
     {
+        private const string VALID_RESULT = "\"result\":0";
+
         [Fact]
         public async void SetPosition_SetMousePadDifferentColors()
         {
@@ -23,7 +25,9 @@ namespace Chroma.NetCore.Api.Tests.Devices
             Assert.True(container.Mousepad.SetPosition(0, 7, Color.Red));
             Assert.True(container.Mousepad.SetPosition(0, 8, Color.Yellow));
 
-            await container.Mousepad.SetDevice();
+            var result = await container.Mousepad.SetDevice();
+            
+            Assert.True(result.Contains(VALID_RESULT));
         }
 
         [Fact]
@@ -39,7 +43,10 @@ namespace Chroma.NetCore.Api.Tests.Devices
             Assert.True(container.Mouse.SetPosition(2, 3, Color.Blue));
             //For DeathAdder Chroma Logo
             Assert.True(container.Mouse.SetPosition(7, 3, Color.Purple));
-            await container.Mouse.SetDevice();
+
+            var result = await container.Mouse.SetDevice();
+
+            Assert.True(result.Contains(VALID_RESULT));
         }
 
         [Fact]
@@ -58,7 +65,23 @@ namespace Chroma.NetCore.Api.Tests.Devices
             
             var result = await container.Keyboard.SetDevice();
 
-            Assert.True(result.Contains("\"result\":0"));
+            Assert.True(result.Contains(VALID_RESULT));
+
+        }
+
+        [Fact]
+        public async void SetStatic_SetDifferentColors()
+        {
+            var tests = new ChromaHttpClientTests();
+
+            var httpClient = await tests.Register_ReturnRegisteredClient();
+            httpClient.ClientMessage += HttpClientOnClientMessage;
+            var container = new DeviceContainer(httpClient);
+
+            await container.Keyboard.SetStatic(Color.Yellow);
+            await container.Mousepad.SetStatic(Color.Purple);
+            await container.Headset.SetStatic(Color.Blue);
+            await container.Mouse.SetStatic(Color.White);
 
         }
 
