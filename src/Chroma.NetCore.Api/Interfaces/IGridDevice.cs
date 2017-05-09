@@ -12,7 +12,7 @@ namespace Chroma.NetCore.Api.Interfaces
 
         bool SetPosition(int row, int col, Color color);
 
-        Task SetDevice();
+        Task<string> SetDevice();
         
     }
 }

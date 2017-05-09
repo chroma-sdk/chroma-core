@@ -42,6 +42,26 @@ namespace Chroma.NetCore.Api.Tests.Devices
             await container.Mouse.SetDevice();
         }
 
+        [Fact]
+        public async void SetPosition_SetKeyboardDifferentColors()
+        {
+            var tests = new ChromaHttpClientTests();
+
+            var httpClient = await tests.Register_ReturnRegisteredClient();
+            httpClient.ClientMessage += HttpClientOnClientMessage;
+            var container = new DeviceContainer(httpClient);
+            Assert.True(container.Keyboard.SetPosition(1, 2, Color.Yellow));
+            Assert.True(container.Keyboard.SetPosition(1, 3, Color.Blue));
+            Assert.True(container.Keyboard.SetPosition(1, 4, Color.Green));
+
+            Assert.True(container.Keyboard.SetPosition(2, 3, Color.Red));
+            
+            var result = await container.Keyboard.SetDevice();
+
+            Assert.True(result.Contains("\"result\":0"));
+
+        }
+
 
         private void HttpClientOnClientMessage(HttpStatusCode httpStatusCode, string device, string s)
         {

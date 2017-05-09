@@ -48,13 +48,15 @@ namespace Chroma.NetCore.Api.Interfaces
            await SetDeviceEffect(Effect.ChromaNone);
         }
 
-        protected async Task SetDeviceEffect(Effect effect, dynamic data = null)
+        protected async Task<string> SetDeviceEffect(Effect effect, dynamic data = null)
         {
             this.ActiveEffect = effect;
             this.EffectData = GenerateMessage(data);
             
             var headsetMessage = new DeviceMessage(this);
             var response = await client.Request(headsetMessage);
+
+            return response;
         }
 
 
@@ -83,6 +85,11 @@ namespace Chroma.NetCore.Api.Interfaces
 
                 case Effect.ChromaCustom2:
                 case Effect.ChromaCustom:
+                    message.Effect = ActiveEffect.GetStringValue();
+                    message.Param = data;
+                    break;
+
+                case Effect.ChromaCustomKey:
                     message.Effect = ActiveEffect.GetStringValue();
                     message.Param = data;
                     break;

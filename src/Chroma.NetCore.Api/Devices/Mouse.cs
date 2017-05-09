@@ -23,7 +23,7 @@ namespace Chroma.NetCore.Api.Devices
             return Grid.SetPosition(row, col, color);
         }
 
-        public Task SetDevice()
+        public Task<string> SetDevice()
         {
             return SetDeviceEffect(Effect.ChromaCustom2, this.Grid.ToMatrix());
         }
