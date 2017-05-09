@@ -39,23 +39,24 @@ namespace Chroma.NetCore.Api.Tests.Chroma
         }
 
 
-
         [Theory, InlineData(1, 89)]
         [Trait("Category", TraitCategory.UNIT_TEST)]
         public void SetPosition_ReturnChromaNetCoreApiException(int outRow, int outCol)
         {
             var grid = new Grid(GRID_ROWS, GRID_COLS);
-            var ex =Assert.Throws<ChromaNetCoreApiException>(() => grid.SetPosition(1, 89, Color.Red));
+            var ex = Assert.Throws<ChromaNetCoreApiException>(() => grid.SetPosition(1, 89, Color.Red));
             Assert.Contains(ex.Message, $"The column index is out of range {outCol}");
 
         }
+
+
 
         [Theory, InlineData(29, 79)]
         [Trait("Category", TraitCategory.UNIT_TEST)]
         public void GetPosition_ReturnChromaNetCoreApiException(int outRow, int outCol)
         {
             var grid = new Grid(GRID_ROWS, GRID_COLS);
-            var ex =  Assert.Throws<ChromaNetCoreApiException>(() => grid.GetPosition(outRow, outCol));
+            var ex = Assert.Throws<ChromaNetCoreApiException>(() => grid.GetPosition(outRow, outCol));
             Assert.Contains(ex.Message, $"The row index is out of range {outRow}");
         }
 

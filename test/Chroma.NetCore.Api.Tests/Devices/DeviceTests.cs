@@ -87,7 +87,6 @@ namespace Chroma.NetCore.Api.Tests.Devices
             var result = await container.Keyboard.SetDevice();
 
             Assert.True(result.Contains(VALID_RESULT));
-
         }
 
         [Fact]
@@ -103,7 +102,6 @@ namespace Chroma.NetCore.Api.Tests.Devices
             await container.Mousepad.SetStatic(Color.Purple);
             await container.Headset.SetStatic(Color.Blue);
             await container.Mouse.SetStatic(Color.White);
-
         }
 
 

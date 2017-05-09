@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Chroma.NetCore.Api.Tests.Chroma
 {
-    public class DeviceContainerTests
+    public class ChromaInstanceTests
     {
         [Fact]
         public async void SetAll_ColorRed()

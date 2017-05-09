@@ -81,7 +81,7 @@ namespace Chroma.NetCore.Api
             heartbeatTimer = new Timer(async state =>
             {
                 await Heartbeat();
-            }, null, 10000, 1000);
+            }, null, 10000, 5000);
             
             return sessionId;
         }

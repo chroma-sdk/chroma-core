@@ -7,19 +7,16 @@ using Xunit;
 
 namespace Chroma.NetCore.Api.Tests.Chroma
 {
-    public class DeviceContainerTests
+    public class ChromaAppTests
     {
         [Fact]
-        public async void SetAll_ColorRed()
+        public async void Instance_ReturnValidInstance()
         {
-            var tests = new ChromaHttpClientTests();
+            var app = new ChromaApp(title: "Chroma Test App", description: "App for Tests" );
+            var instance = await app.Instance();
 
-            var httpClient = await tests.Register_ReturnRegisteredClient();
-            
-            httpClient.ClientMessage += HttpClientOnClientMessage;
+            Assert.NotNull(instance);
 
-            var container = new DeviceContainer(httpClient);
-            container.SetAll(Color.Red);
         }
 
         private void HttpClientOnClientMessage(HttpStatusCode httpStatusCode, string device, string s)
