@@ -6,9 +6,9 @@ using Chroma.NetCore.Api.Interfaces;
 
 namespace Chroma.NetCore.Api.Devices
 {
-    public class ChromaLink : DeviceBase
+    public class Headset : DeviceBase
     {
-        public override string Device => "chromalink";
+        public override string Device => "headset";
 
         public override List<Effect> Supports => new List<Effect>
         {
@@ -17,7 +17,7 @@ namespace Chroma.NetCore.Api.Devices
             Effect.ChromaStatic
         };
         
-        public ChromaLink(IClient client) : base(client)
+        public Headset(IClient client) : base(client)
         {
         }
     }

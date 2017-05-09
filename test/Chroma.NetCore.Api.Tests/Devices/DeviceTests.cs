@@ -31,6 +31,27 @@ namespace Chroma.NetCore.Api.Tests.Devices
         }
 
         [Fact]
+        public async void SetPosition_SetKeyPadDifferentColors()
+        {
+            var tests = new ChromaHttpClientTests();
+
+            var httpClient = await tests.Register_ReturnRegisteredClient();
+
+            httpClient.ClientMessage += HttpClientOnClientMessage;
+
+            var container = new DeviceContainer(httpClient);
+
+            Assert.True(container.Keypad.SetPosition(0, 0, Color.Orange));
+            Assert.True(container.Keypad.SetPosition(1, 1, Color.Green));
+            Assert.True(container.Keypad.SetPosition(2, 3, Color.Red));
+            Assert.True(container.Keypad.SetPosition(3, 4, Color.Yellow));
+
+            var result = await container.Keypad.SetDevice();
+
+            Assert.True(result.Contains(VALID_RESULT));
+        }
+
+        [Fact]
         public async void SetPosition_SetMouseDifferentColors()
         {
             var tests = new ChromaHttpClientTests();
@@ -57,10 +78,10 @@ namespace Chroma.NetCore.Api.Tests.Devices
             var httpClient = await tests.Register_ReturnRegisteredClient();
             httpClient.ClientMessage += HttpClientOnClientMessage;
             var container = new DeviceContainer(httpClient);
+
             Assert.True(container.Keyboard.SetPosition(1, 2, Color.Yellow));
             Assert.True(container.Keyboard.SetPosition(1, 3, Color.Blue));
             Assert.True(container.Keyboard.SetPosition(1, 4, Color.Green));
-
             Assert.True(container.Keyboard.SetPosition(2, 3, Color.Red));
             
             var result = await container.Keyboard.SetDevice();

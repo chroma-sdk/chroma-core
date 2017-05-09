@@ -13,6 +13,9 @@ namespace Chroma.NetCore.Api.Chroma
         public Headset Headset { get; }
         public Mouse Mouse { get; }
         public Mousepad Mousepad { get; }
+        public Keypad Keypad { get; }
+        public ChromaLink ChromaLink { get; }
+
         public List<IDevice> Devices { get; }
 
         public DeviceContainer(IClient client)
@@ -22,13 +25,17 @@ namespace Chroma.NetCore.Api.Chroma
             Headset = new Headset(client);
             Mouse = new Mouse(client);
             Mousepad = new Mousepad(client);
+            Keypad = new Keypad(client);
+            ChromaLink = new ChromaLink(client);
 
             Devices = new List<IDevice>()
             {
                 Keyboard,
                 Headset,
                 Mouse,
-                Mousepad
+                Mousepad,
+                Keypad,
+                ChromaLink
             };
         }
 
