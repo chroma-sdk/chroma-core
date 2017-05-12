@@ -76,13 +76,6 @@ namespace Chroma.NetCore.Api
 
             ClientConfiguration.ExposedBaseAddress = newExposedBaseAddress;
 
-            await Heartbeat();
-
-            heartbeatTimer = new Timer(async state =>
-            {
-                await Heartbeat();
-            }, null, 10000, 5000);
-            
             return sessionId;
         }
 
@@ -100,7 +93,7 @@ namespace Chroma.NetCore.Api
 
             ClientConfiguration.ExposedBaseAddress = null;
 
-            heartbeatTimer.Dispose();
+            heartbeatTimer?.Dispose();
 
             return result["result"];
         }
@@ -108,6 +101,12 @@ namespace Chroma.NetCore.Api
 
         public async Task<int> Heartbeat()
         {
+            //Set Timer
+            heartbeatTimer = heartbeatTimer ?? new Timer(async state =>
+            {
+                await Heartbeat();
+            }, null, 10000, 5000);
+
             var heartbeatMessage = new HeartbeatMessage();
             var response = await Request(heartbeatMessage);
 

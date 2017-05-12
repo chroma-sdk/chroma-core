@@ -49,6 +49,20 @@ namespace Chroma.NetCore.Api.Tests
 
 
         [Fact]
+        public async void Heartbeat_ReturnResultTick()
+        {
+            Assert.NotNull(await Register_ReturnRegisteredClient());
+
+            var response = await chromaHttpClient.Heartbeat();
+
+            var resultCode = Convert.ToInt32(response);
+
+            Assert.IsType<int>(resultCode);
+            Assert.True(resultCode >= 0);
+        }
+
+
+        [Fact]
         public async Task<IClient> Register_ReturnRegisteredClient()
         {
             var initMessage = File.ReadAllText(Path.Combine(testFilePath,"initMessage.json"));

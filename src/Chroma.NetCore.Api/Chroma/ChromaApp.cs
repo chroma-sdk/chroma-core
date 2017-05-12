@@ -59,6 +59,7 @@ namespace Chroma.NetCore.Api.Chroma
             var client = new ChromaHttpClient();
             client.Init(clientConfiguration);
             await client.Register(jsonAppDefinition);
+            await client.Heartbeat();
             instance = new ChromaInstance(client);
 
             return instance;
