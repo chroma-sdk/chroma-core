@@ -11,6 +11,8 @@ namespace Chroma.NetCore.Api.Chroma
     {
         private IClient client;
 
+        public event Action InstanceDestroyMessage = delegate { };
+
         public ChromaInstance(IClient client) : base(client)
         {
             this.client = client;
@@ -20,7 +22,12 @@ namespace Chroma.NetCore.Api.Chroma
         {
             var result = await client.UnRegister();
 
-            return Convert.ToInt32(result) == 0;
+            var unregistered = Convert.ToInt32(result) == 0;
+
+            if (unregistered)
+                InstanceDestroyMessage();
+
+            return unregistered;
         }
         
     }
