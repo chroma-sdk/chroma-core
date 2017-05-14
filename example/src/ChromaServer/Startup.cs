@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Chroma.NetCore.Api.Chroma;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,6 +30,10 @@ namespace ChromaServer
         {
             // Add framework services.
             services.AddMvc();
+
+            var chromaApp = new ChromaApp(title: "Chroma Server Test App", description: "Chroma Test App for .Net Core server", author: "sdc4");
+            
+            services.AddSingleton(chromaApp);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +58,7 @@ namespace ChromaServer
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Chroma}/{action=Index}/{id?}");
             });
         }
     }
