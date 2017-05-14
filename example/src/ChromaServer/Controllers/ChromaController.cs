@@ -56,5 +56,13 @@ namespace ChromaServer.Controllers
             return Ok(true);
         }
 
+        [HttpGet]
+        public async Task<ActionResult> Unregister()
+        {
+            var instance = await chromaApp.Instance();
+        
+            return Ok(await instance.Destroy());
+        }
+
     }
 }

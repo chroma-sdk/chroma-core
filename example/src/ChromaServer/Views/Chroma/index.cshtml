@@ -3,38 +3,59 @@
     ViewData["Title"] = "Static";
 }
 
-<h2>Set a static color to all devices</h2>
-<div>
-    <button type="button" class="btn btn-primary" onclick="setAll('0000FF')">Blue</button>
-    <button type="button" class="btn btn-success" onclick="setAll('00FF00')">Green</button>
-    <button type="button" class="btn btn-danger" onclick="setAll('FF0000')">Red</button>
-    <button type="button" class="btn btn-warning" onclick="setAll('FFA500')">Orange</button>
-    <button type="button" class="btn btn-default" onclick="setAll('FFFFFF')">White</button>
+<div style="margin-top: 25px" class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">ChromaServer Test App</h3>
+    </div>
+    <div class="panel panel-body">
+        <h3>Set a static color to all devices</h3>
+        <div>
+            <button type="button" class="btn btn-primary" onclick="setAll('0000FF')">Blue</button>
+            <button type="button" class="btn btn-success" onclick="setAll('00FF00')">Green</button>
+            <button type="button" class="btn btn-danger" onclick="setAll('FF0000')">Red</button>
+            <button type="button" class="btn btn-warning" onclick="setAll('FFA500')">Orange</button>
+            <button type="button" class="btn btn-default" onclick="setAll('FFFFFF')">White</button>
+        </div>
+
+        <h3>Set a different color to a specific device</h3>
+        <div>
+            <button type="button" class="btn btn-primary" onclick="setStatic('keyboard', '0000FF')">Keyboard</button>
+            <button type="button" class="btn btn-success" onclick="setStatic('headset', '00FF00')">Headset</button>
+            <button type="button" class="btn btn-danger" onclick="setStatic('mouse', 'FF0000')">Mouse</button>
+            <button type="button" class="btn btn-warning" onclick="setStatic('mousepad', 'FFA500')">Mousepad</button>
+            <button type="button" class="btn btn-info" onclick="setStatic('keypad', '99B7F7')">Keypad</button>
+            <button type="button" class="btn btn-default" onclick="setStatic('chromalink', 'FFFFFF')">ChromaLink</button>
+        </div>
+    </div>
 </div>
 
-<h2>Set a different color to a specific device</h2>
-<div>
-    <button type="button" class="btn btn-primary" onclick="setStatic('keyboard','0000FF')">Keyboard</button>
-    <button type="button" class="btn btn-success" onclick="setStatic('headset','00FF00')">Headset</button>
-    <button type="button" class="btn btn-danger" onclick="setStatic('mouse','FF0000')">Mouse</button>
-    <button type="button" class="btn btn-warning" onclick="setStatic('mousepad','FFA500')">Mousepad</button>
-    <button type="button" class="btn btn-info" onclick="setStatic('keypad','99B7F7')">Keypad</button>
-    <button type="button" class="btn btn-default" onclick="setStatic('chromalink','FFFFFF')">ChromaLink</button>
+<div class="panel panel-default">
+    <div class="panel panel-body">
+        <h3>Set a static color to all devices</h3>
+        <div>
+            <button type="button" class="btn btn-primary" onclick="unregister()">Unregister Chroma Server</button>
+        </div>
+    </div>
 </div>
+    <script>
+        function setAll(color) {
+            $.ajax({
+                dataType: "json",
+                url: "/chroma/all/" + color
+            });
+        };
 
-<script>
-    function setAll(color) {
-        $.ajax({
-            dataType: "json",
-            url: "/chroma/all/" + color
-        });
-    };
+        function setStatic(device, color) {
+            $.ajax({
+                dataType: "json",
+                url: "/chroma/static/" + device + "/" + color
+            });
+        };
 
-    function setStatic(device,color) {
-        $.ajax({
-            dataType: "json",
-            url: "/chroma/static/" + device + "/" + color
-        });
-    };
-
-</script>F
+        function unregister() {
+            $.ajax({
+                dataType: "json",
+                url: "/chroma/unregister"
+            });
+        };
+    </script>
