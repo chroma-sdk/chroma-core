@@ -7,6 +7,7 @@ namespace Chroma.NetCore.Api
 {
     public static class Bootsrapper
     {
+        public static bool DebugMode => true;
 
         public static IClient DefaultClient { get; }
 

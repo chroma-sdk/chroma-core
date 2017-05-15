@@ -36,8 +36,8 @@ namespace Chroma.NetCore.Api.Chroma
         public async Task<List<string>> Send(DeviceContainer deviceContainer = null)
         {
             container = deviceContainer ?? this;
-            var effectIds = new Stack<string>();
-            var devices = new Stack<IDevice>();
+            var effectIds = new List<string>();
+            var devices = new List<IDevice>();
             var responses = new List<string>();
 
             foreach (var device in container.Devices)
@@ -46,23 +46,27 @@ namespace Chroma.NetCore.Api.Chroma
                     continue;
 
                 if (!string.IsNullOrEmpty(device.EffectId))
-                    effectIds.Push(device.EffectId);
+                    effectIds.Add(device.EffectId);
                 else
-                    devices.Push(device);
+                    devices.Add(device);
             }
 
             responses.AddRange(await SetEffect(effectIds));
-            responses.AddRange(await SendDeviceUpdate(devices));
+            responses.AddRange((await SendDeviceUpdate(devices)).Values);
 
             return responses;
         }
 
-        internal async Task<List<string>> SendDeviceUpdate(Stack<IDevice> devices, bool store = false)
+        internal async Task<Dictionary<IDevice,string>> SendDeviceUpdate(List<IDevice> devices, bool store = false)
         {
-            var responses = new List<string>();
+            var responses = new Dictionary<IDevice,string>();
 
             foreach (var device in devices)
             {
+                //ignore devices with no effects
+                if(device.EffectData == null)
+                    continue;
+
                 IHttpRequestMessage message;
 
                 if(store)
@@ -70,14 +74,14 @@ namespace Chroma.NetCore.Api.Chroma
                 else
                     message = new DeviceUpdateMessage(device);
 
-                responses.Add(await client.Request(message));
+                responses.Add(device,await client.Request(message));
             }
 
             return responses;
         }
 
 
-        internal async Task<List<string>> SetEffect(Stack<string> effectIds)
+        internal async Task<List<string>> SetEffect(List<string> effectIds)
         {
             var responses = new List<string>();
 

@@ -18,7 +18,7 @@ namespace Chroma.NetCore.Api.Interfaces
         public abstract string Device { get; }
         public virtual List<Effect> Supports { get; }
         public Effect ActiveEffect { get; private set; }
-        public string EffectId { get; }
+        public string EffectId { get; set; }
 
         #endregion
 
@@ -49,7 +49,6 @@ namespace Chroma.NetCore.Api.Interfaces
         {
             this.ActiveEffect = effect;
             this.EffectData = GenerateMessage(data);
-         
 
             return true;
         }

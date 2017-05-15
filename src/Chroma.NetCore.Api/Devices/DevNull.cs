@@ -13,7 +13,7 @@ namespace Chroma.NetCore.Api.Devices
         public  string Device => "devnull";
         public List<Effect> Supports { get; }
         public Effect ActiveEffect { get; }
-        public string EffectId { get; }
+        public string EffectId { get; set; }
         public dynamic EffectData { get; set; }
 
         public void SetStatic(Color color)

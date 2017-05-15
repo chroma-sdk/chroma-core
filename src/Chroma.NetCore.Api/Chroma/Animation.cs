@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Chroma.NetCore.Api.Interfaces;
+using Newtonsoft.Json;
 
 namespace Chroma.NetCore.Api.Chroma
 {
     public class Animation
     {
-        public Stack<AnimationFrame> Frames { get; }
+        public List<AnimationFrame> Frames { get; }
         public bool IsPlaying { get; set; }
         public int CurrentFrame { get; set; }
 
@@ -18,7 +20,7 @@ namespace Chroma.NetCore.Api.Chroma
 
         public Animation()
         {
-            Frames = new Stack<AnimationFrame>();
+            Frames = new List<AnimationFrame>();
         }
 
         public virtual void CreateFrames()
@@ -27,24 +29,35 @@ namespace Chroma.NetCore.Api.Chroma
             {
                 var frame = new AnimationFrame();
                 frame.Keyboard.SetAll(new Color("ff0000"));
-                this.Frames.Push(frame);
+                this.Frames.Add(frame);
             }
         }
 
-        //internal async Task CreateEffects(ChromaInstance instance)
-        //{
-           
-           
-        //    var response = await instance.SendDeviceUpdate([device], true);
-        //    var keyboardids = response[0];
+        /// <summary>
+        /// Create a effect for every frame and device
+        /// </summary>
+        /// <param name="instance">The instance of Chroma</param>
+        /// <returns></returns>
+        internal async Task CreateEffects(ChromaInstance instance)
+        {
+         
+            foreach (var frame in Frames)
+            {
+                var response = await instance.SendDeviceUpdate(frame.Devices, true);
 
-        //    for (let i = 0; i < keyboardids.length; i++)
-        //    {
-        //        this.Frames[i].Keyboard.effectId = keyboardids[i].id;
-        //    }
-        //    return;
-        //}
+                foreach (var deviceResponse in response)
+                {
+                    deviceResponse.Key.EffectId = ExtractEffectId(deviceResponse.Value);
+                }
+            }
 
+            string ExtractEffectId(string jsonResponse)
+            {
+                var response = JsonConvert.DeserializeObject<dynamic>(jsonResponse);
+                return response.id;
+            }
+
+        }
 
         public async Task Play(ChromaInstance instance)
         {
@@ -54,22 +67,24 @@ namespace Chroma.NetCore.Api.Chroma
                 CreateFrames();
             }
 
-            //this.instance = instance;
             IsPlaying = true;
             CurrentFrame = 0;
-            //await CreateEffects(instance);
+            await CreateEffects(instance);
 
            await PlayLoop(instance);
         }
 
-
-
         internal async Task PlayLoop(ChromaInstance instance)
         {
+            int f = 0;
+            CurrentFrame = f;
+
             foreach (var frame in Frames)
             {
                  await instance.Send(frame);
                  await Task.Delay(frame.Delay);
+
+                CurrentFrame = f++;
 
                 if (!IsPlaying)
                     break;
@@ -77,7 +92,5 @@ namespace Chroma.NetCore.Api.Chroma
             if (IsPlaying)
                 await PlayLoop(instance);
         }
-
-
     }
 }

@@ -13,7 +13,7 @@ namespace Chroma.NetCore.Api.Interfaces
         List<Effect> Supports { get; }
 
         Effect ActiveEffect { get; }
-        string EffectId { get; }
+        string EffectId { get; set; }
 
         dynamic EffectData { get; set; }
 

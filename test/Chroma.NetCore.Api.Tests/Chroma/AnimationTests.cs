@@ -18,9 +18,8 @@ namespace Chroma.NetCore.Api.Tests.Chroma
 
             var testAnimation = new TestAnimation();
             testAnimation.CreateFrames();
-            await testAnimation.Play(instance);
-
-
+             await testAnimation.Play(instance);
+            await Task.Delay(10000);
         }
 
         private void HttpClientOnClientMessage(HttpStatusCode httpStatusCode, string device, string s)
@@ -37,7 +36,7 @@ namespace Chroma.NetCore.Api.Tests.Chroma
                 {
                     var frame = new AnimationFrame();
                     frame.Keyboard.SetAll(new Color(0, i, 0));
-                    this.Frames.Push(frame);
+                    this.Frames.Add(frame);
                 }
             }
         }

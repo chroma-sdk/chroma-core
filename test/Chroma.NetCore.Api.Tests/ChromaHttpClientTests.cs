@@ -16,10 +16,12 @@ namespace Chroma.NetCore.Api.Tests
 
         private ChromaHttpClient chromaHttpClient;
 
-        private readonly Uri baseUri = new Uri("http://localhost/");
+        private readonly Uri baseUri = new Uri(Bootsrapper.DebugMode ? "http://localhost.fiddler/" : "http://localhost/");
 
         public ChromaHttpClientTests()
         {
+
+
             testFilePath = Path.Combine(TestBase.AssemblyDirectory, "Files");
 
             clientConfiguration = new ClientConfiguration()
