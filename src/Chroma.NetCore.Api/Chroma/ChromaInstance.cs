@@ -33,14 +33,14 @@ namespace Chroma.NetCore.Api.Chroma
             return unregistered;
         }
 
-        public async Task<List<string>> Send(DeviceContainer container = null)
+        public async Task<List<string>> Send(DeviceContainer deviceContainer = null)
         {
-            this.container = container ?? this.container;
+            container = deviceContainer ?? this;
             var effectIds = new Stack<string>();
             var devices = new Stack<IDevice>();
             var responses = new List<string>();
 
-            foreach (var device in this.Devices)
+            foreach (var device in container.Devices)
             {
                 if(device.ActiveEffect == Effect.Undefined)
                     continue;

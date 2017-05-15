@@ -8,14 +8,19 @@ using Xunit;
 
 namespace Chroma.NetCore.Api.Tests.Chroma
 {
-    public class ChromaAppTests
+    public class AnimationTests
     {
         [Fact]
         public async void TestAnimationCreateFrames()
         {
+            var tests = new ChromaInstanceTests();
+            var instance =  await tests.Instance_ReturnValidInstance();
+
             var testAnimation = new TestAnimation();
             testAnimation.CreateFrames();
-         
+            await testAnimation.Play(instance);
+
+
         }
 
         private void HttpClientOnClientMessage(HttpStatusCode httpStatusCode, string device, string s)
@@ -26,7 +31,7 @@ namespace Chroma.NetCore.Api.Tests.Chroma
         
         public class TestAnimation : Animation
         {
-            public void CreateFrames()
+            public override void CreateFrames()
             {
                 for (var i = 0; i < 255; i += 10)
                 {
