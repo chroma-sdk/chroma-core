@@ -16,9 +16,6 @@ namespace Chroma.NetCore.Api.Devices
             Effect.ChromaCustom,
             Effect.ChromaStatic
         };
-        
-        public ChromaLink(IClient client) : base(client)
-        {
-        }
+
     }
 }

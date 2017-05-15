@@ -13,8 +13,6 @@ namespace Chroma.NetCore.Api.Interfaces
     public abstract class DeviceBase : IDevice, IDeviceData
     {
 
-        private IClient client;
-
         #region Properties
 
         public abstract string Device { get; }
@@ -24,39 +22,36 @@ namespace Chroma.NetCore.Api.Interfaces
 
         #endregion
 
-        protected DeviceBase(IClient client)
+        protected DeviceBase()
         {
-            this.client = client;
             ActiveEffect = Effect.Undefined;
             EffectData = null;
         }
 
         public dynamic EffectData { get; set; }
 
-        public async Task SetStatic(Color color)
+        public void SetStatic(Color color)
         {
-            await SetDeviceEffect(Effect.ChromaStatic, color);
+           SetDeviceEffect(Effect.ChromaStatic, color);
         }
 
-        public async Task SetAll(Color color)
+        public void SetAll(Color color)
         {
-           await  SetStatic(color);
+           SetStatic(color);
         }
 
-        public async Task SetNone()
+        public void SetNone()
         {
-           await SetDeviceEffect(Effect.ChromaNone);
+           SetDeviceEffect(Effect.ChromaNone);
         }
 
-        protected async Task<string> SetDeviceEffect(Effect effect, dynamic data = null)
+        protected bool SetDeviceEffect(Effect effect, dynamic data = null)
         {
             this.ActiveEffect = effect;
             this.EffectData = GenerateMessage(data);
-            
-            var headsetMessage = new DeviceMessage(this);
-            var response = await client.Request(headsetMessage);
+         
 
-            return response;
+            return true;
         }
 
 

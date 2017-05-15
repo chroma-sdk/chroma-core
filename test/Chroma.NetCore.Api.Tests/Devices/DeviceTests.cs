@@ -7,7 +7,7 @@ namespace Chroma.NetCore.Api.Tests.Devices
 {
     public class DeviceTests
     {
-        private const string VALID_RESULT = "\"result\":0";
+       
 
         [Fact]
         public async void SetPosition_SetMousePadDifferentColors()
@@ -18,16 +18,16 @@ namespace Chroma.NetCore.Api.Tests.Devices
             
             httpClient.ClientMessage += HttpClientOnClientMessage;
 
-            var container = new DeviceContainer(httpClient);
+            var container = new DeviceContainer();
             //For FireFly Chroma
             Assert.True(container.Mousepad.SetPosition(0, 0, Color.Orange));
             Assert.True(container.Mousepad.SetPosition(0, 6, Color.Green));
             Assert.True(container.Mousepad.SetPosition(0, 7, Color.Red));
             Assert.True(container.Mousepad.SetPosition(0, 8, Color.Yellow));
 
-            var result = await container.Mousepad.SetDevice();
+            var result =  container.Mousepad.SetDevice();
             
-            Assert.True(result.Contains(VALID_RESULT));
+            Assert.True(result);
         }
 
         [Fact]
@@ -39,16 +39,16 @@ namespace Chroma.NetCore.Api.Tests.Devices
 
             httpClient.ClientMessage += HttpClientOnClientMessage;
 
-            var container = new DeviceContainer(httpClient);
+            var container = new DeviceContainer();
 
             Assert.True(container.Keypad.SetPosition(0, 0, Color.Orange));
             Assert.True(container.Keypad.SetPosition(1, 1, Color.Green));
             Assert.True(container.Keypad.SetPosition(2, 3, Color.Red));
             Assert.True(container.Keypad.SetPosition(3, 4, Color.Yellow));
 
-            var result = await container.Keypad.SetDevice();
+            var result = container.Keypad.SetDevice();
 
-            Assert.True(result.Contains(VALID_RESULT));
+            Assert.True(result);
         }
 
         [Fact]
@@ -58,16 +58,16 @@ namespace Chroma.NetCore.Api.Tests.Devices
 
             var httpClient = await tests.Register_ReturnRegisteredClient();
             httpClient.ClientMessage += HttpClientOnClientMessage;
-            var container = new DeviceContainer(httpClient);
+            var container = new DeviceContainer();
             
             //For DeathAdder Chroma Wheel
             Assert.True(container.Mouse.SetPosition(2, 3, Color.Blue));
             //For DeathAdder Chroma Logo
             Assert.True(container.Mouse.SetPosition(7, 3, Color.Purple));
 
-            var result = await container.Mouse.SetDevice();
+            var result = container.Mouse.SetDevice();
 
-            Assert.True(result.Contains(VALID_RESULT));
+            Assert.True(result);
         }
 
         [Fact]
@@ -77,16 +77,16 @@ namespace Chroma.NetCore.Api.Tests.Devices
 
             var httpClient = await tests.Register_ReturnRegisteredClient();
             httpClient.ClientMessage += HttpClientOnClientMessage;
-            var container = new DeviceContainer(httpClient);
+            var container = new DeviceContainer();
 
             Assert.True(container.Keyboard.SetPosition(1, 2, Color.Yellow));
             Assert.True(container.Keyboard.SetPosition(1, 3, Color.Blue));
             Assert.True(container.Keyboard.SetPosition(1, 4, Color.Green));
             Assert.True(container.Keyboard.SetPosition(2, 3, Color.Red));
             
-            var result = await container.Keyboard.SetDevice();
+            var result = container.Keyboard.SetDevice();
 
-            Assert.True(result.Contains(VALID_RESULT));
+            Assert.True(result);
         }
 
         [Fact]
@@ -96,12 +96,12 @@ namespace Chroma.NetCore.Api.Tests.Devices
 
             var httpClient = await tests.Register_ReturnRegisteredClient();
             httpClient.ClientMessage += HttpClientOnClientMessage;
-            var container = new DeviceContainer(httpClient);
+            var container = new DeviceContainer();
 
-            await container.Keyboard.SetStatic(Color.Yellow);
-            await container.Mousepad.SetStatic(Color.Purple);
-            await container.Headset.SetStatic(Color.Blue);
-            await container.Mouse.SetStatic(Color.White);
+            container.Keyboard.SetStatic(Color.Yellow);
+            container.Mousepad.SetStatic(Color.Purple);
+            container.Headset.SetStatic(Color.Blue);
+            container.Mouse.SetStatic(Color.White);
         }
 
 

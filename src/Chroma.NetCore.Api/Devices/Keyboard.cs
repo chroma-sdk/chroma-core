@@ -18,7 +18,7 @@ namespace Chroma.NetCore.Api.Devices
         private const int ROWS = 6;
         private const int COLUMNS = 22;
 
-        public Keyboard(IClient client) : base(client)
+        public Keyboard()
         {
             Grid = new Grid(ROWS, COLUMNS);
             Keys = new Grid(ROWS, COLUMNS);
@@ -53,7 +53,7 @@ namespace Chroma.NetCore.Api.Devices
         }
 
 
-        public Task<string> SetDevice()
+        public bool SetDevice()
         {
             var customKeyEffect = new
             {

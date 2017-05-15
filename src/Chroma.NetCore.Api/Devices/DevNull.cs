@@ -16,17 +16,17 @@ namespace Chroma.NetCore.Api.Devices
         public string EffectId { get; }
         public dynamic EffectData { get; set; }
 
-        public Task SetStatic(Color color)
+        public void SetStatic(Color color)
         {
             throw new NotImplementedException();
         }
 
-        public Task SetAll(Color color)
+        public void SetAll(Color color)
         {
             throw new NotImplementedException();
         }
 
-        public Task SetNone()
+        public void SetNone()
         {
             throw new NotImplementedException();
         }

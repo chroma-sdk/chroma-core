@@ -18,7 +18,7 @@ namespace Chroma.NetCore.Api.Tests.Devices
 
             var httpClient = await tests.Register_ReturnRegisteredClient();
             httpClient.ClientMessage += HttpClientOnClientMessage;
-            var keyboard = new Keyboard(httpClient);
+            var keyboard = new Keyboard();
 
             var keys = new List<Key>()
             {
@@ -30,9 +30,9 @@ namespace Chroma.NetCore.Api.Tests.Devices
 
             Assert.True(keyboard.SetKey(keys, Color.Red));
 
-            var result = await keyboard.SetDevice();
+            var result = keyboard.SetDevice();
 
-            Assert.True(result.Contains(VALID_RESULT));
+            Assert.True(result);
         }
 
         [Fact]
@@ -42,12 +42,12 @@ namespace Chroma.NetCore.Api.Tests.Devices
 
             var httpClient = await tests.Register_ReturnRegisteredClient();
             httpClient.ClientMessage += HttpClientOnClientMessage;
-            var keyboard = new Keyboard(httpClient);
+            var keyboard = new Keyboard();
             Assert.True(keyboard.SetKey(Key.Enter, Color.Red));
 
-            var result = await keyboard.SetDevice();
+            var result = keyboard.SetDevice();
 
-            Assert.True(result.Contains(VALID_RESULT));
+            Assert.True(result);
         }
 
         private void HttpClientOnClientMessage(HttpStatusCode httpStatusCode, string device, string s)

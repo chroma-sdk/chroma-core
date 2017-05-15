@@ -4,6 +4,9 @@
     <TargetFramework>netstandard1.6</TargetFramework>
     <Copyright>Andre Rueb (sdc4)</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageLicenseUrl>https://mit-license.org/</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <Description>Implementation of  Razer Chroma API SDK 2.x for .NET Core</Description>
   </PropertyGroup>
 
   <ItemGroup>

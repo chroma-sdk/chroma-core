@@ -13,7 +13,7 @@ namespace Chroma.NetCore.Api.Devices
 
         public Grid Grid { get; }
 
-        public Mouse(IClient client) : base(client)
+        public Mouse()
         {
             Grid = new Grid(9,7);
         }
@@ -23,7 +23,7 @@ namespace Chroma.NetCore.Api.Devices
             return Grid.SetPosition(row, col, color);
         }
 
-        public Task<string> SetDevice()
+        public bool SetDevice()
         {
             return SetDeviceEffect(Effect.ChromaCustom2, this.Grid.ToMatrix());
         }

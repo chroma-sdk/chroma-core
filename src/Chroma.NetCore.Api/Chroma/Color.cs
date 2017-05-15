@@ -13,7 +13,7 @@ namespace Chroma.NetCore.Api.Chroma
         private int g;
         private int b;
 
-        private string color;
+        private readonly string color;
 
         public Color(string color)
         {
@@ -80,11 +80,6 @@ namespace Chroma.NetCore.Api.Chroma
             if (bHex.Length < 2) bHex = "0" + bHex;
 
             var result = bHex + gHex + rHex;
-           
-            //if (this.isKey)
-            //{
-            //    result = "ff" + result;
-            //}
 
             return int.Parse(result, NumberStyles.HexNumber);
         }

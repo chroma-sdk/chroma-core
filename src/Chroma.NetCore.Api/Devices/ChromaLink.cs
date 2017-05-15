@@ -16,9 +16,5 @@ namespace Chroma.NetCore.Api.Devices
             Effect.ChromaCustom,
             Effect.ChromaStatic
         };
-        
-        public Headset(IClient client) : base(client)
-        {
-        }
     }
 }

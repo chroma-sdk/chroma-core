@@ -34,6 +34,7 @@ namespace ChromaServer.Controllers
             var color = new Color(hexColor);
 
             instance.SetAll(color);
+            await instance.Send();
 
             return Ok(true);
         }
@@ -51,7 +52,9 @@ namespace ChromaServer.Controllers
             var assignedDevice = instance.Devices.FirstOrDefault(
                 x => string.Equals(x.Device, device, StringComparison.CurrentCultureIgnoreCase));
 
-            await assignedDevice.SetStatic(color);
+            assignedDevice.SetStatic(color);
+
+            await instance.Send();
 
             return Ok(true);
         }

@@ -5,15 +5,15 @@ using Newtonsoft.Json;
 
 namespace Chroma.NetCore.Api.Messages
 {
-    public class DeviceMessage : IHttpRequestMessage
+    public class DeviceUpdateMessage : IHttpRequestMessage
     {
-        public DeviceMessage(IDevice device)
+        public DeviceUpdateMessage(IDevice device)
         {
             Device = device;
         }
 
         public IDevice Device { get; }
-        public Enums.HttpMessageMethod HttpMessageMethod => Enums.HttpMessageMethod.Post;
+        public Enums.HttpMessageMethod HttpMessageMethod => Enums.HttpMessageMethod.Put;
         public string UrlPath => $"chromasdk/{Device.Device}";
         public string Message => Device.EffectData.ToString();
     }

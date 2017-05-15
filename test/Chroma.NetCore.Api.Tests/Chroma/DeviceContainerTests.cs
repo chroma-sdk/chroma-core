@@ -18,7 +18,7 @@ namespace Chroma.NetCore.Api.Tests.Chroma
             
             httpClient.ClientMessage += HttpClientOnClientMessage;
 
-            var container = new DeviceContainer(httpClient);
+            var container = new DeviceContainer();
             container.SetAll(Color.Red);
         }
 

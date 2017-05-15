@@ -22,9 +22,9 @@ namespace Chroma.NetCore.Api.Interfaces
 
         #region Methods
 
-        Task SetStatic(Color color);
-        Task SetAll(Color color);
-        Task SetNone();
+        void SetStatic(Color color);
+        void SetAll(Color color);
+        void SetNone();
 
         #endregion
 

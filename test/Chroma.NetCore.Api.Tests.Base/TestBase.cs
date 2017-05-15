@@ -8,6 +8,8 @@ namespace Chroma.NetCore.Tests.Base
     public class TestBase
     {
 
+        public const string VALID_RESULT = "{\"result\":0}";
+
         static TestBase()
         {
 
