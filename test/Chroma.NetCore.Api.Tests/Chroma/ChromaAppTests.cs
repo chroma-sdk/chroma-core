@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using Chroma.NetCore.Api.Chroma;
+using Chroma.NetCore.Tests.Base;
 using Xunit;
 
 namespace Chroma.NetCore.Api.Tests.Chroma
@@ -17,6 +18,9 @@ namespace Chroma.NetCore.Api.Tests.Chroma
 
             Assert.NotNull(instance);
 
+            instance.SetAll(Color.Red);
+            var result = await instance.Send();
+            Assert.All(result,x => Assert.Contains(x.Response, TestBase.VALID_RESULT));
         }
 
         private void HttpClientOnClientMessage(HttpStatusCode httpStatusCode, string device, string s)
