@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Chroma.NetCore.Api.Devices;
 using Chroma.NetCore.Api.Interfaces;
 using Chroma.NetCore.Api.Messages;
 
@@ -14,6 +15,7 @@ namespace Chroma.NetCore.Api.Chroma
         private DeviceContainer container;
 
         public event Action DestroyMessage = delegate { };
+
 
         public ChromaInstance(IClient client)
         {
@@ -33,12 +35,12 @@ namespace Chroma.NetCore.Api.Chroma
             return unregistered;
         }
 
-        public async Task<List<string>> Send(DeviceContainer deviceContainer = null)
+        public async Task<List<RequestResponse>> Send(DeviceContainer deviceContainer = null)
         {
             container = deviceContainer ?? this;
             var effectIds = new List<string>();
             var devices = new List<IDevice>();
-            var responses = new List<string>();
+            var responses = new List<RequestResponse>();
 
             foreach (var device in container.Devices)
             {
@@ -52,14 +54,14 @@ namespace Chroma.NetCore.Api.Chroma
             }
 
             responses.AddRange(await SetEffect(effectIds));
-            responses.AddRange((await SendDeviceUpdate(devices)).Values);
+            responses.AddRange( await SendDeviceUpdate(devices));
 
             return responses;
         }
 
-        internal async Task<Dictionary<IDevice,string>> SendDeviceUpdate(List<IDevice> devices, bool store = false)
+        internal async Task<List<RequestResponse>> SendDeviceUpdate(List<IDevice> devices, bool store = false)
         {
-            var responses = new Dictionary<IDevice,string>();
+            var responses = new List<RequestResponse>();
 
             foreach (var device in devices)
             {
@@ -74,7 +76,7 @@ namespace Chroma.NetCore.Api.Chroma
                 else
                     message = new DeviceUpdateMessage(device);
 
-                responses.Add(device,await client.Request(message));
+                responses.Add( new RequestResponse(device,await client.Request(message)));
             }
 
             return responses;
@@ -93,16 +95,16 @@ namespace Chroma.NetCore.Api.Chroma
             return responses;
         }
 
-        internal async Task<List<string>> SetEffect(List<string> effectIds)
+        internal async Task<List<RequestResponse>> SetEffect(List<string> effectIds)
         {
-            var responses = new List<string>();
+            var responses = new List<RequestResponse>();
 
             if (effectIds.Count <= 0)
                 return responses;
 
             var message = new EffectMessage(effectIds);
 
-            responses.Add(await client.Request(message));
+            responses.Add(new RequestResponse(message.Device, await client.Request(message)));
 
             return responses;
         }

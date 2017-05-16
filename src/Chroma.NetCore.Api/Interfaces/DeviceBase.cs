@@ -95,5 +95,9 @@ namespace Chroma.NetCore.Api.Interfaces
             return jsonString;
         }
 
+        public override string ToString()
+        {
+            return this.Device;
+        }
     }
 }

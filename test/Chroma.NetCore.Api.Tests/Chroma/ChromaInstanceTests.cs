@@ -32,7 +32,7 @@ namespace Chroma.NetCore.Api.Tests.Chroma
             instance.SetAll(Color.Red);
             var result =  await instance.Send();
             Assert.True(result.Count > 0);
-            Assert.All(result,x => Assert.Contains(x,TestBase.VALID_RESULT));
+            Assert.All(result,x => Assert.Contains(x.Response,TestBase.VALID_RESULT));
 
         }
 

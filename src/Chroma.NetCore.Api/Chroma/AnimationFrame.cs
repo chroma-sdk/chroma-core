@@ -1,9 +1,10 @@
 ﻿namespace Chroma.NetCore.Api.Chroma
 {
 
-        public class AnimationFrame : DeviceContainer
-        {
+    public class AnimationFrame : DeviceContainer
+    {
 
-            public int Delay => 1000 / 15;
-        }
+        public int Number { get; set; }
+        public int Delay => 1000 / 15;
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,18 +18,19 @@ namespace Chroma.NetCore.Api.Tests.Chroma
             var instance = await tests.Instance_ReturnValidInstance();
 
             var testAnimation = new TestAnimation(instance);
+            testAnimation.AnimationState += (devices, frame, result) =>
+            {
+                Console.WriteLine($"Devices: {string.Join(",", devices)}, Frame: {frame} of {testAnimation.Frames.Count}, Effects: {string.Join(",", devices.Select(x=>x.EffectId))} Result: {string.Join(",", result)}");
+            };
+
             testAnimation.CreateFrames();
+
             var playTask = testAnimation.Play();
             await Task.Delay(20000);
             await testAnimation.Stop();
         }
 
-        private void HttpClientOnClientMessage(HttpStatusCode httpStatusCode, string device, string s)
-        {
-           Console.WriteLine($"{httpStatusCode}:{device}:{s}");
-        }
-
-        
+              
         public class TestAnimation : Animation
         {
             public override void CreateFrames()

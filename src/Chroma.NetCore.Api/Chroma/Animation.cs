@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Chroma.NetCore.Api.Devices;
 using Chroma.NetCore.Api.Interfaces;
 using Newtonsoft.Json;
 
@@ -14,7 +15,13 @@ namespace Chroma.NetCore.Api.Chroma
         public bool IsPlaying { get; set; }
         public int CurrentFrame { get; set; }
 
+        public delegate void AnimationStateDelegate(List<IDevice> devices, int currentFrame, List<string> result = null);
+
+        public event AnimationStateDelegate AnimationState = delegate { };
+
         private ChromaInstance instance;
+
+        private Dictionary<int, List<IDevice>> effects;
 
         private bool IsInit;
 
@@ -37,18 +44,25 @@ namespace Chroma.NetCore.Api.Chroma
         /// <summary>
         /// Create a effect for every frame and device
         /// </summary>
-        /// <param name="instance">The instance of Chroma</param>
         /// <returns></returns>
         internal async Task CreateEffects()
         {
+            int f = 0;
+            effects = new Dictionary<int, List<IDevice>>();
             foreach (var frame in Frames)
             {
+                frame.Number = f++;
                 var response = await instance.SendDeviceUpdate(frame.Devices, true);
+
+                var devices = new List<IDevice>();
 
                 foreach (var deviceResponse in response)
                 {
-                    deviceResponse.Key.EffectId = ExtractEffectId(deviceResponse.Value);
+                    deviceResponse.Device.EffectId = ExtractEffectId(deviceResponse.Response);
+                    devices.Add(deviceResponse.Device);
                 }
+
+                effects.Add(frame.Number, devices);
             }
 
             string ExtractEffectId(string jsonResponse)
@@ -56,7 +70,6 @@ namespace Chroma.NetCore.Api.Chroma
                 var response = JsonConvert.DeserializeObject<dynamic>(jsonResponse);
                 return response.id;
             }
-
         }
 
         public async Task Play()
@@ -69,7 +82,7 @@ namespace Chroma.NetCore.Api.Chroma
 
             IsPlaying = true;
             CurrentFrame = 0;
-            await CreateEffects();
+           await CreateEffects();
 
            await PlayLoop();
         }
@@ -102,16 +115,21 @@ namespace Chroma.NetCore.Api.Chroma
 
             foreach (var frame in Frames)
             {
-                 await instance.Send(frame);
-                 await Task.Delay(frame.Delay);
-
-                CurrentFrame = f++;
+                var result = await instance.Send(frame);
+                await Task.Delay(frame.Delay);
 
                 if (!IsPlaying)
+                {
+                    effects = null;
                     break;
+                }
+                AnimationState(effects[f], f, result.Select(x => x.Response).ToList());
+                CurrentFrame = f++;
             }
             if (IsPlaying)
                 await PlayLoop();
         }
+
+       
     }
 }

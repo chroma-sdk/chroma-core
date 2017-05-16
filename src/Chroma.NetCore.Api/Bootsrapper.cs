@@ -7,12 +7,14 @@ namespace Chroma.NetCore.Api
 {
     public static class Bootsrapper
     {
-        public static bool DebugMode => true;
+        public static bool DebugMode { get; set; }
 
         public static IClient DefaultClient { get; }
 
         static Bootsrapper()
         {
+            DebugMode = false;
+
             if (DefaultClient != null)
                 return;
 
@@ -22,8 +24,9 @@ namespace Chroma.NetCore.Api
                 BaseAddress = new Uri("http://localhost/")
             };
             DefaultClient.Init(defaultClientConfig);
-
         }
+
+
     }
 }
 
