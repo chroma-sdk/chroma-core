@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\example\src\ChromaServer\ChromaServer.csproj" />
     <ProjectReference Include="..\..\src\Chroma.NetCore.Api\Chroma.NetCore.Api.csproj" />
     <ProjectReference Include="..\Chroma.NetCore.Api.Tests.Base\Chroma.NetCore.Tests.Base.csproj" />
   </ItemGroup>

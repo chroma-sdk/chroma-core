@@ -71,10 +71,10 @@ namespace Chroma.NetCore.Api.Chroma
                 return response.id;
             }
         }
-
-        public async Task Play()
+        
+        public async Task Play(bool playLoop = true)
         {
-            if (Frames.Count <=0)
+            if (Frames.Count <= 0)
             {
                 IsInit = true;
                 CreateFrames();
@@ -82,9 +82,33 @@ namespace Chroma.NetCore.Api.Chroma
 
             IsPlaying = true;
             CurrentFrame = 0;
-           await CreateEffects();
+            await CreateEffects();
 
-           await PlayLoop();
+            await PlayLoop(playLoop);
+        }
+        private async Task PlayLoop(bool playLoop)
+        {
+            int f = 0;
+            CurrentFrame = f;
+
+            foreach (var frame in Frames)
+            {
+                var result = await instance.Send(frame);
+                await Task.Delay(frame.Delay);
+
+                if (!IsPlaying)
+                {
+                    effects = null;
+                    break;
+                }
+                AnimationState(effects[f], f, result.Select(x => x.Response).ToList());
+                CurrentFrame = f++;
+            }
+            if (IsPlaying && playLoop)
+                await PlayLoop(true);
+
+            if (!playLoop)
+                await Stop();
         }
 
         public async Task Stop()
@@ -107,29 +131,6 @@ namespace Chroma.NetCore.Api.Chroma
             await instance.DeleteEffect(effectIds);
 
         }
-
-        internal async Task PlayLoop()
-        {
-            int f = 0;
-            CurrentFrame = f;
-
-            foreach (var frame in Frames)
-            {
-                var result = await instance.Send(frame);
-                await Task.Delay(frame.Delay);
-
-                if (!IsPlaying)
-                {
-                    effects = null;
-                    break;
-                }
-                AnimationState(effects[f], f, result.Select(x => x.Response).ToList());
-                CurrentFrame = f++;
-            }
-            if (IsPlaying)
-                await PlayLoop();
-        }
-
        
     }
 }

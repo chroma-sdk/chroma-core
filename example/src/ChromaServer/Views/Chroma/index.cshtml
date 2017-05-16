@@ -26,6 +26,12 @@
             <button type="button" class="btn btn-info" onclick="setStatic('keypad', '99B7F7')">Keypad</button>
             <button type="button" class="btn btn-default" onclick="setStatic('chromalink', 'FFFFFF')">ChromaLink</button>
         </div>
+        
+        <h3>Play animation..</h3>
+        <div>
+            <button type="button" class="btn btn-success" onclick="playAnimation()">Start</button>
+            <button type="button" class="btn btn-danger" onclick="setStatic('mouse', 'FF0000')">Stop</button>
+        </div>
     </div>
 </div>
 
@@ -50,6 +56,13 @@
                 dataType: "json",
                 url: "/chroma/static/" + device + "/" + color
             });
+        };
+
+        function playAnimation(id) {
+            $.getJSON("/chroma/play",
+                function() {
+                    console.log("success");
+                });
         };
 
         function unregister() {

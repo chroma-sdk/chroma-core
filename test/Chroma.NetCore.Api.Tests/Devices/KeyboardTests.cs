@@ -33,6 +33,7 @@ namespace Chroma.NetCore.Api.Tests.Devices
             var result = keyboard.SetDevice();
 
             Assert.True(result);
+
         }
 
         [Fact]

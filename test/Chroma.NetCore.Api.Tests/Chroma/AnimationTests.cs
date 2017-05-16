@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Chroma.NetCore.Api.Chroma;
+using ChromaServer.Animations;
 using Xunit;
 
 namespace Chroma.NetCore.Api.Tests.Chroma
@@ -30,7 +28,26 @@ namespace Chroma.NetCore.Api.Tests.Chroma
             await testAnimation.Stop();
         }
 
-              
+        [Fact]
+        public async void TestAnimationRandomCreateFrames()
+        {
+            Bootsrapper.DebugMode = true;
+            var tests = new ChromaInstanceTests();
+            var instance = await tests.Instance_ReturnValidInstance();
+
+            var testAnimation = new RandomAnimation(instance);
+            testAnimation.AnimationState += (devices, frame, result) =>
+            {
+                Console.WriteLine($"Devices: {string.Join(",", devices)}, Frame: {frame} of {testAnimation.Frames.Count}, Effects: {string.Join(",", devices.Select(x => x.EffectId))} Result: {string.Join(",", result)}");
+            };
+
+            testAnimation.CreateFrames();
+
+            await testAnimation.Play(false);
+            
+        }
+
+
         public class TestAnimation : Animation
         {
             public override void CreateFrames()

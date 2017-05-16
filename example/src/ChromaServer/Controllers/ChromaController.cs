@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Chroma.NetCore.Api.Chroma;
+using ChromaServer.Animations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,6 +41,18 @@ namespace ChromaServer.Controllers
         }
 
 
+
+        [HttpGet]
+        public async Task<ActionResult> Play(string id)
+        {
+            var instance = await chromaApp.Instance();
+            var animation = new RandomAnimation(instance);
+            animation.Play();
+            await Task.Delay(15000);
+            await animation.Stop();
+
+            return Ok(true);
+        }
 
         [HttpGet]
         [Route("/chroma/static/{device}/{hexColor}")]

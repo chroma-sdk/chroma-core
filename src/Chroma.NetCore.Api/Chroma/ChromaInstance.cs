@@ -15,8 +15,7 @@ namespace Chroma.NetCore.Api.Chroma
         private DeviceContainer container;
 
         public event Action DestroyMessage = delegate { };
-
-
+        
         public ChromaInstance(IClient client)
         {
             this.client = client;
