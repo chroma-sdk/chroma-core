@@ -80,6 +80,18 @@ namespace Chroma.NetCore.Api.Chroma
             return responses;
         }
 
+        internal async Task<List<string>> DeleteEffect(List<string> effectIds)
+        {
+            var responses = new List<string>();
+
+            if (effectIds.Count <= 0)
+                return responses;
+
+            var message = new EffectMessage(effectIds, true);
+
+            responses.Add(await client.Request(message));
+            return responses;
+        }
 
         internal async Task<List<string>> SetEffect(List<string> effectIds)
         {
@@ -88,12 +100,9 @@ namespace Chroma.NetCore.Api.Chroma
             if (effectIds.Count <= 0)
                 return responses;
 
-            foreach (var effectId in effectIds)
-            {
-                var message = new EffectMessage(effectId);
+            var message = new EffectMessage(effectIds);
 
-                responses.Add(await client.Request(message));
-            }
+            responses.Add(await client.Request(message));
 
             return responses;
         }

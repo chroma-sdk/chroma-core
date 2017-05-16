@@ -133,7 +133,7 @@ namespace Chroma.NetCore.Api
                     break;
 
                 case Enums.HttpMessageMethod.Delete:
-                    responseMessage = await httpClient.DeleteAsync(requestMessage.UrlPath);
+                    responseMessage = await httpClient.DeleteAsync(requestMessage.UrlPath, messageContent);
                     break;
                     
                 case Enums.HttpMessageMethod.Put:

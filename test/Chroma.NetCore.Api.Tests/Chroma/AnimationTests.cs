@@ -14,12 +14,13 @@ namespace Chroma.NetCore.Api.Tests.Chroma
         public async void TestAnimationCreateFrames()
         {
             var tests = new ChromaInstanceTests();
-            var instance =  await tests.Instance_ReturnValidInstance();
+            var instance = await tests.Instance_ReturnValidInstance();
 
-            var testAnimation = new TestAnimation();
+            var testAnimation = new TestAnimation(instance);
             testAnimation.CreateFrames();
-             await testAnimation.Play(instance);
-            await Task.Delay(10000);
+            var playTask = testAnimation.Play();
+            await Task.Delay(20000);
+            await testAnimation.Stop();
         }
 
         private void HttpClientOnClientMessage(HttpStatusCode httpStatusCode, string device, string s)
@@ -35,9 +36,15 @@ namespace Chroma.NetCore.Api.Tests.Chroma
                 for (var i = 0; i < 255; i += 10)
                 {
                     var frame = new AnimationFrame();
+
                     frame.Keyboard.SetAll(new Color(0, i, 0));
+                    frame.Mouse.SetStatic(new Color(i,0,100));
                     this.Frames.Add(frame);
                 }
+            }
+
+            public TestAnimation(ChromaInstance instance) : base(instance)
+            {
             }
         }
 

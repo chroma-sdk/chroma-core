@@ -14,12 +14,13 @@ namespace Chroma.NetCore.Api.Chroma
         public bool IsPlaying { get; set; }
         public int CurrentFrame { get; set; }
 
-        //private ChromaInstance instance;
+        private ChromaInstance instance;
 
         private bool IsInit;
 
-        public Animation()
+        public Animation(ChromaInstance instance)
         {
+            this.instance = instance;
             Frames = new List<AnimationFrame>();
         }
 
@@ -38,9 +39,8 @@ namespace Chroma.NetCore.Api.Chroma
         /// </summary>
         /// <param name="instance">The instance of Chroma</param>
         /// <returns></returns>
-        internal async Task CreateEffects(ChromaInstance instance)
+        internal async Task CreateEffects()
         {
-         
             foreach (var frame in Frames)
             {
                 var response = await instance.SendDeviceUpdate(frame.Devices, true);
@@ -59,7 +59,7 @@ namespace Chroma.NetCore.Api.Chroma
 
         }
 
-        public async Task Play(ChromaInstance instance)
+        public async Task Play()
         {
             if (Frames.Count <=0)
             {
@@ -69,12 +69,33 @@ namespace Chroma.NetCore.Api.Chroma
 
             IsPlaying = true;
             CurrentFrame = 0;
-            await CreateEffects(instance);
+            await CreateEffects();
 
-           await PlayLoop(instance);
+           await PlayLoop();
         }
 
-        internal async Task PlayLoop(ChromaInstance instance)
+        public async Task Stop()
+        {
+            IsPlaying = false;
+            
+            var effectIds = new List<string>();
+
+            foreach (var frame in Frames)
+            {
+                foreach (var frameDevice in frame.Devices)
+                {
+                    if(String.IsNullOrEmpty(frameDevice.EffectId))
+                        continue;
+
+                    effectIds.Add(frameDevice.EffectId);
+                }
+            }
+
+            await instance.DeleteEffect(effectIds);
+
+        }
+
+        internal async Task PlayLoop()
         {
             int f = 0;
             CurrentFrame = f;
@@ -90,7 +111,7 @@ namespace Chroma.NetCore.Api.Chroma
                     break;
             }
             if (IsPlaying)
-                await PlayLoop(instance);
+                await PlayLoop();
         }
     }
 }
