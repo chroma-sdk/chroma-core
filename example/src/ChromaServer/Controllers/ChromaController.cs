@@ -40,16 +40,13 @@ namespace ChromaServer.Controllers
             return Ok(true);
         }
 
-
-
         [HttpGet]
         public async Task<ActionResult> Play(string id)
         {
             var instance = await chromaApp.Instance();
             var animation = new RandomAnimation(instance);
-            animation.Play();
-            await Task.Delay(15000);
-            await animation.Stop();
+            await animation.Play(false);
+            await Unregister();
 
             return Ok(true);
         }
