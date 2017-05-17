@@ -26,7 +26,6 @@ namespace Chroma.NetCore.Api.Tests.Chroma
         [Fact]
         public async Task SetAll_ColorRed()
         {
-
             var instance = await Instance_ReturnValidInstance();
             
             instance.SetAll(Color.Red);

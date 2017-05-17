@@ -5,14 +5,26 @@ using Xunit;
 
 namespace Chroma.NetCore.Api.Tests.Devices
 {
-    public class DeviceTests
+    public class DeviceTests : IDisposable
     {
-       
+
+        private ChromaHttpClientTests tests;
+
+        public DeviceTests()
+        {
+            tests = new ChromaHttpClientTests();
+        }
+
+        public void Dispose()
+        {
+
+
+            tests.Unregister_ReturnResultString0();
+        }
 
         [Fact]
         public async void SetPosition_SetMousePadDifferentColors()
         {
-            var tests = new ChromaHttpClientTests();
 
             var httpClient = await tests.Register_ReturnRegisteredClient();
             
@@ -33,7 +45,6 @@ namespace Chroma.NetCore.Api.Tests.Devices
         [Fact]
         public async void SetPosition_SetKeyPadDifferentColors()
         {
-            var tests = new ChromaHttpClientTests();
 
             var httpClient = await tests.Register_ReturnRegisteredClient();
 
@@ -54,7 +65,6 @@ namespace Chroma.NetCore.Api.Tests.Devices
         [Fact]
         public async void SetPosition_SetMouseDifferentColors()
         {
-            var tests = new ChromaHttpClientTests();
 
             var httpClient = await tests.Register_ReturnRegisteredClient();
             httpClient.ClientMessage += HttpClientOnClientMessage;
@@ -73,8 +83,6 @@ namespace Chroma.NetCore.Api.Tests.Devices
         [Fact]
         public async void SetPosition_SetKeyboardDifferentColors()
         {
-            var tests = new ChromaHttpClientTests();
-
             var httpClient = await tests.Register_ReturnRegisteredClient();
             httpClient.ClientMessage += HttpClientOnClientMessage;
             var container = new DeviceContainer();
@@ -92,8 +100,6 @@ namespace Chroma.NetCore.Api.Tests.Devices
         [Fact]
         public async void SetStatic_SetDifferentColors()
         {
-            var tests = new ChromaHttpClientTests();
-
             var httpClient = await tests.Register_ReturnRegisteredClient();
             httpClient.ClientMessage += HttpClientOnClientMessage;
             var container = new DeviceContainer();

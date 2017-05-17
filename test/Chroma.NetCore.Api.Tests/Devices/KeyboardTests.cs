@@ -7,14 +7,28 @@ using Xunit;
 
 namespace Chroma.NetCore.Api.Tests.Devices
 {
-    public class KeyboardTests
+    public class KeyboardTests : IDisposable
     {
+
+        private ChromaHttpClientTests tests;
+
+        public KeyboardTests()
+        {
+            tests = new ChromaHttpClientTests();
+        }
+
+        public void Dispose()
+        {
+            tests.Unregister_ReturnResultString0();
+        }
+
+
+
         private const string VALID_RESULT = "\"result\":0";
 
         [Fact]
         public async void SetKey_ListOfKeys()
         {
-            var tests = new ChromaHttpClientTests();
 
             var httpClient = await tests.Register_ReturnRegisteredClient();
             httpClient.ClientMessage += HttpClientOnClientMessage;
@@ -39,7 +53,6 @@ namespace Chroma.NetCore.Api.Tests.Devices
         [Fact]
         public async void SetKey_SetOneKey()
         {
-            var tests = new ChromaHttpClientTests();
 
             var httpClient = await tests.Register_ReturnRegisteredClient();
             httpClient.ClientMessage += HttpClientOnClientMessage;
