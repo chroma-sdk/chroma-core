@@ -31,7 +31,7 @@ namespace Chroma.NetCore.Api.Tests.Chroma
         [Fact]
         public async void TestAnimationRandomCreateFrames()
         {
-            Bootsrapper.DebugMode = true;
+            Bootsrapper.DebugMode = false;
             var tests = new ChromaInstanceTests();
             var instance = await tests.Instance_ReturnValidInstance();
 

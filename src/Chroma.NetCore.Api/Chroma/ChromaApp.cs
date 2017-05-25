@@ -46,14 +46,14 @@ namespace Chroma.NetCore.Api.Chroma
             this.jsonAppDefinition = JsonConvert.SerializeObject(appDefinition, Formatting.Indented);
         }
 
-        public async Task<ChromaInstance> Instance()
+        public async Task<ChromaInstance> Instance(string apiBaseAddress = "http://localhost/")
         {
             if (instance != null)
                 return instance;
 
             var clientConfiguration = new ClientConfiguration()
             {
-                BaseAddress = new Uri("http://localhost/")
+                BaseAddress = new Uri(apiBaseAddress)
             };
 
             var client = new ChromaHttpClient();
