@@ -1,4 +1,5 @@
 # Chroma .Net Core API
+[![Build status](https://ci.appveyor.com/api/projects/status/48c2i57yv44l82ar?svg=true)](https://ci.appveyor.com/project/njbmartin/chroma-core) [![CircleCI](https://circleci.com/gh/chroma-sdk/chroma-core.svg?style=svg&circle-token=1d117227f7c59513ccb727fd6e4911d8d283f132)](https://circleci.com/gh/chroma-sdk/chroma-core)
 
 API for Razer Chroma SDK 2.x
 
