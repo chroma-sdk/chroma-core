@@ -3,6 +3,7 @@ image: Visual Studio 2017
 build_script:
 - cmd: >-
     dotnet restore
+    
     dotnet build
 test_script:
 - cmd: dotnet test ./test/Chroma.NetCore.Api.Tests/Chroma.NetCore.Api.Tests.csproj --no-build --filter Category=UnitTest
