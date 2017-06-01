@@ -1,9 +1,8 @@
 version: 1.0.{build}
 image: Visual Studio 2017
+before_build:
+  - cmd: dotnet restore
 build_script:
-- cmd: >-
-    dotnet restore
-    
-    dotnet build
+- cmd: dotnet build
 test_script:
 - cmd: dotnet test ./test/Chroma.NetCore.Api.Tests/Chroma.NetCore.Api.Tests.csproj --no-build --filter Category=UnitTest
