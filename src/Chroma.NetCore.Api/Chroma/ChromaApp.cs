@@ -10,6 +10,9 @@ namespace Chroma.NetCore.Api.Chroma
     public class ChromaApp
     {
         private ChromaInstance instance;
+
+        private const string DEFAULT_BASE_ADDRESS = "http://localhost:54235";
+
         internal string jsonAppDefinition;
 
         public ChromaApp(string jsonAppDefinition)
@@ -46,7 +49,7 @@ namespace Chroma.NetCore.Api.Chroma
             this.jsonAppDefinition = JsonConvert.SerializeObject(appDefinition, Formatting.Indented);
         }
 
-        public async Task<ChromaInstance> Instance(string apiBaseAddress = "http://localhost/")
+        public async Task<ChromaInstance> Instance(string apiBaseAddress = DEFAULT_BASE_ADDRESS)
         {
             if (instance != null)
                 return instance;

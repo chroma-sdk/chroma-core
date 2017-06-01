@@ -12,6 +12,9 @@ namespace Chroma.NetCore.Api.Tests.Chroma
         [Fact]
         public async void TestAnimationCreateFrames()
         {
+            //Set DebugMode to debug with Fiddler
+            //Bootsrapper.DebugMode = true;
+
             var tests = new ChromaInstanceTests();
             var instance = await tests.Instance_ReturnValidInstance();
 

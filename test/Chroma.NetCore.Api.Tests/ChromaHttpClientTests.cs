@@ -12,11 +12,13 @@ namespace Chroma.NetCore.Api.Tests
     {
         private readonly string testFilePath;
 
+        private const int API_PORT = 54235;
+
         private readonly ClientConfiguration clientConfiguration;
 
         private ChromaHttpClient chromaHttpClient;
 
-        private readonly Uri baseUri = new Uri(Bootsrapper.DebugMode ? "http://localhost.fiddler/" : "http://localhost/");
+        private readonly Uri baseUri = new Uri(Bootsrapper.DebugMode ? $"http://localhost.fiddler:{API_PORT}/" : $"http://localhost:{API_PORT}/");
 
         public ChromaHttpClientTests()
         {
