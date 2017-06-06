@@ -18,7 +18,7 @@ namespace Chroma.NetCore.Api.Tests
 
         private ChromaHttpClient chromaHttpClient;
 
-        private readonly Uri baseUri = new Uri(Bootsrapper.DebugMode ? $"http://localhost.fiddler:{API_PORT}/" : $"http://localhost:{API_PORT}/");
+        private readonly Uri baseUri = new Uri(Bootstrapper.DebugMode ? $"http://localhost.fiddler:{API_PORT}/" : $"http://localhost:{API_PORT}/");
 
         public ChromaHttpClientTests()
         {

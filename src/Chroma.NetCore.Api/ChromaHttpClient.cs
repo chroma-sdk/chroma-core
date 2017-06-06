@@ -72,7 +72,7 @@ namespace Chroma.NetCore.Api
 
 #if DEBUG
 
-            if(Bootsrapper.DebugMode)
+            if(Bootstrapper.DebugMode)
                 newExposedBaseAddress = new Uri(result["uri"].Replace("localhost","localhost.fiddler"));
 #endif
 
