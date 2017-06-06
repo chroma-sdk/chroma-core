@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using Chroma.NetCore.Api.Chroma;
+using Chroma.NetCore.Tests.Base;
 using Xunit;
 
 namespace Chroma.NetCore.Api.Tests.Devices
@@ -23,6 +24,7 @@ namespace Chroma.NetCore.Api.Tests.Devices
         }
 
         [Fact]
+        [Trait("Category", TraitCategory.UNIT_TEST)]
         public async void SetPosition_SetMousePadDifferentColors()
         {
 
@@ -43,6 +45,7 @@ namespace Chroma.NetCore.Api.Tests.Devices
         }
 
         [Fact]
+        [Trait("Category", TraitCategory.UNIT_TEST)]
         public async void SetPosition_SetKeyPadDifferentColors()
         {
 
@@ -63,6 +66,7 @@ namespace Chroma.NetCore.Api.Tests.Devices
         }
 
         [Fact]
+        [Trait("Category", TraitCategory.UNIT_TEST)]
         public async void SetPosition_SetMouseDifferentColors()
         {
 
@@ -81,6 +85,7 @@ namespace Chroma.NetCore.Api.Tests.Devices
         }
 
         [Fact]
+        [Trait("Category", TraitCategory.UNIT_TEST)]
         public async void SetPosition_SetKeyboardDifferentColors()
         {
             var httpClient = await tests.Register_ReturnRegisteredClient();
@@ -98,6 +103,7 @@ namespace Chroma.NetCore.Api.Tests.Devices
         }
 
         [Fact]
+        [Trait("Category", TraitCategory.UNIT_TEST)]
         public async void SetStatic_SetDifferentColors()
         {
             var httpClient = await tests.Register_ReturnRegisteredClient();

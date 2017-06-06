@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using Chroma.NetCore.Api.Chroma;
 using Chroma.NetCore.Api.Devices;
+using Chroma.NetCore.Tests.Base;
 using Xunit;
 
 namespace Chroma.NetCore.Api.Tests.Devices
@@ -27,6 +28,7 @@ namespace Chroma.NetCore.Api.Tests.Devices
         private const string VALID_RESULT = "\"result\":0";
 
         [Fact]
+        [Trait("Category", TraitCategory.UNIT_TEST)]
         public async void SetKey_ListOfKeys()
         {
 
@@ -51,6 +53,7 @@ namespace Chroma.NetCore.Api.Tests.Devices
         }
 
         [Fact]
+        [Trait("Category", TraitCategory.UNIT_TEST)]
         public async void SetKey_SetOneKey()
         {
 
