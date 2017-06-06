@@ -24,7 +24,7 @@ namespace Chroma.NetCore.Api.Chroma
 
         public  async Task<bool> Destroy()
         {
-            var result = await client.UnRegister();
+            var result = await client.UnRegister().ConfigureAwait(false);
 
             var unregistered = Convert.ToInt32(result) == 0;
 
@@ -52,8 +52,8 @@ namespace Chroma.NetCore.Api.Chroma
                     devices.Add(device);
             }
 
-            responses.AddRange(await SetEffect(effectIds));
-            responses.AddRange( await SendDeviceUpdate(devices));
+            responses.AddRange(await SetEffect(effectIds).ConfigureAwait(false));
+            responses.AddRange( await SendDeviceUpdate(devices).ConfigureAwait(false));
 
             return responses;
         }
@@ -75,7 +75,7 @@ namespace Chroma.NetCore.Api.Chroma
                 else
                     message = new DeviceUpdateMessage(device);
 
-                responses.Add( new RequestResponse(device,await client.Request(message)));
+                responses.Add( new RequestResponse(device,await client.Request(message).ConfigureAwait(false)));
             }
 
             return responses;
@@ -90,7 +90,7 @@ namespace Chroma.NetCore.Api.Chroma
 
             var message = new EffectMessage(effectIds, true);
 
-            responses.Add(await client.Request(message));
+            responses.Add(await client.Request(message).ConfigureAwait(false));
             return responses;
         }
 
@@ -103,7 +103,7 @@ namespace Chroma.NetCore.Api.Chroma
 
             var message = new EffectMessage(effectIds);
 
-            responses.Add(new RequestResponse(message.Device, await client.Request(message)));
+            responses.Add(new RequestResponse(message.Device, await client.Request(message).ConfigureAwait(false)));
 
             return responses;
         }

@@ -60,7 +60,7 @@ namespace Chroma.NetCore.Api
         public async Task<string> Register(string jsonMessage)
         {
             var registerMessage = new RegisterMessage(jsonMessage);
-            var response = await Request(registerMessage);
+            var response = await Request(registerMessage).ConfigureAwait(false); ;
            
             var result = JsonConvert.DeserializeObject<Dictionary<string, string>>(response, new JsonSerializerSettings());
              
@@ -88,7 +88,7 @@ namespace Chroma.NetCore.Api
         public async Task<string> UnRegister()
         {
             var unRegisterMessage = new UnRegisterMessage();
-            var response = await Request(unRegisterMessage);
+            var response = await Request(unRegisterMessage).ConfigureAwait(false);
 
             var result =
                 JsonConvert.DeserializeObject<Dictionary<string, string>>(response, new JsonSerializerSettings());
@@ -106,11 +106,11 @@ namespace Chroma.NetCore.Api
             //Set Timer
             heartbeatTimer = heartbeatTimer ?? new Timer(async state =>
             {
-                await Heartbeat();
+                await Heartbeat().ConfigureAwait(false);
             }, null, 10000, 5000);
 
             var heartbeatMessage = new HeartbeatMessage();
-            var response = await Request(heartbeatMessage);
+            var response = await Request(heartbeatMessage).ConfigureAwait(false);
 
             var result =
                 JsonConvert.DeserializeObject<Dictionary<string, string>>(response, new JsonSerializerSettings());
@@ -129,15 +129,15 @@ namespace Chroma.NetCore.Api
             switch (requestMessage.HttpMessageMethod)
             {
                 case Enums.HttpMessageMethod.Post:
-                    responseMessage = await httpClient.PostAsync(requestMessage.UrlPath, messageContent);
+                    responseMessage = await httpClient.PostAsync(requestMessage.UrlPath, messageContent).ConfigureAwait(false);
                     break;
 
                 case Enums.HttpMessageMethod.Delete:
-                    responseMessage = await httpClient.DeleteAsync(requestMessage.UrlPath, messageContent);
+                    responseMessage = await httpClient.DeleteAsync(requestMessage.UrlPath, messageContent).ConfigureAwait(false);
                     break;
                     
                 case Enums.HttpMessageMethod.Put:
-                    responseMessage = await httpClient.PutAsync(requestMessage.UrlPath, messageContent);
+                    responseMessage = await httpClient.PutAsync(requestMessage.UrlPath, messageContent).ConfigureAwait(false);
                     break;
                 default:
                     responseMessage = new HttpResponseMessage();
@@ -146,7 +146,7 @@ namespace Chroma.NetCore.Api
 
             CheckStatusCode(responseMessage);
 
-            var responseString = await responseMessage.Content.ReadAsStringAsync();
+            var responseString = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             //fire event with response message
             ClientMessage(responseMessage.StatusCode, requestMessage.Device.Device ?? "n/a", responseString);
