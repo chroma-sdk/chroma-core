@@ -25,7 +25,7 @@ namespace Chroma.NetCore.Api
 
             var defaultClientConfig = new ClientConfiguration
             {
-                BaseAddress = new Uri("http://localhost/")
+                BaseAddress = new Uri("http://localhost:54235/")
             };
 
             DefaultClient.Init(defaultClientConfig);

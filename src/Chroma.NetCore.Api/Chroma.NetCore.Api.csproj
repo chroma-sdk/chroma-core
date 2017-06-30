@@ -9,6 +9,8 @@
     <Description>Implementation of  Razer Chroma API SDK 2.x for .NET Core</Description>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='WinDebug|AnyCPU'" />
+
   <ItemGroup>
     <Compile Remove="Helper\**" />
     <EmbeddedResource Remove="Helper\**" />
