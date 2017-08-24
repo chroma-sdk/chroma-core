@@ -1,32 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+
+using System;
 using Chroma.NetCore.Api.Interfaces;
 
 namespace Chroma.NetCore.Api
+
 {
-    public static class Bootsrapper
+    public static class Bootstrapper
     {
         public static bool DebugMode { get; set; }
-
+        
         public static IClient DefaultClient { get; }
+        
+        static Bootstrapper()
 
-        static Bootsrapper()
         {
             DebugMode = false;
-
+            
             if (DefaultClient != null)
+
                 return;
 
             DefaultClient = new ChromaHttpClient();
-            var defaultClientConfig  = new ClientConfiguration()
+
+            var defaultClientConfig = new ClientConfiguration
             {
-                BaseAddress = new Uri("http://localhost/")
+                BaseAddress = new Uri("http://localhost:54235/")
             };
+
             DefaultClient.Init(defaultClientConfig);
         }
-
-
     }
 }
 

@@ -13,7 +13,7 @@ namespace Chroma.NetCore.Api.Tests.Chroma
         public async void TestAnimationCreateFrames()
         {
             //Set DebugMode to debug with Fiddler
-            //Bootsrapper.DebugMode = true;
+            //Bootstrapper.DebugMode = true;
 
             var tests = new ChromaInstanceTests();
             var instance = await tests.Instance_ReturnValidInstance();
@@ -34,7 +34,7 @@ namespace Chroma.NetCore.Api.Tests.Chroma
         [Fact]
         public async void TestAnimationRandomCreateFrames()
         {
-            Bootsrapper.DebugMode = false;
+            Bootstrapper.DebugMode = false;
             var tests = new ChromaInstanceTests();
             var instance = await tests.Instance_ReturnValidInstance();
 

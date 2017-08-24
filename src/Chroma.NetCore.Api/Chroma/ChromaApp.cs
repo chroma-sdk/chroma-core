@@ -61,8 +61,8 @@ namespace Chroma.NetCore.Api.Chroma
 
             var client = new ChromaHttpClient();
             client.Init(clientConfiguration);
-            await client.Register(jsonAppDefinition);
-            await client.Heartbeat();
+            await client.Register(jsonAppDefinition).ConfigureAwait(false);
+            await client.Heartbeat().ConfigureAwait(false);
             instance = new ChromaInstance(client);
             instance.DestroyMessage += () => instance = null;
             

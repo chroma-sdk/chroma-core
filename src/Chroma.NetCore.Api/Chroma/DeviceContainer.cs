@@ -42,7 +42,8 @@ namespace Chroma.NetCore.Api.Chroma
         
         public void SetAll(Color color)
         {
-            Devices.ForEach(x => x.SetAll(color));
+            foreach (var device in Devices)
+                device.SetAll(color);
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Chroma.NetCore.Api.Chroma
             foreach (var frame in Frames)
             {
                 frame.Number = f++;
-                var response = await instance.SendDeviceUpdate(frame.Devices, true);
+                var response = await instance.SendDeviceUpdate(frame.Devices, true).ConfigureAwait(false);
 
                 var devices = new List<IDevice>();
 
@@ -82,9 +82,9 @@ namespace Chroma.NetCore.Api.Chroma
 
             IsPlaying = true;
             CurrentFrame = 0;
-            await CreateEffects();
+            await CreateEffects().ConfigureAwait(false);
 
-            await PlayLoop(playLoop);
+            await PlayLoop(playLoop).ConfigureAwait(false);
         }
         private async Task PlayLoop(bool playLoop)
         {
@@ -93,8 +93,8 @@ namespace Chroma.NetCore.Api.Chroma
 
             foreach (var frame in Frames)
             {
-                var result = await instance.Send(frame);
-                await Task.Delay(frame.Delay);
+                var result = await instance.Send(frame).ConfigureAwait(false);
+                await Task.Delay(frame.Delay).ConfigureAwait(false);
 
                 if (!IsPlaying)
                 {
@@ -105,10 +105,10 @@ namespace Chroma.NetCore.Api.Chroma
                 CurrentFrame = f++;
             }
             if (IsPlaying && playLoop)
-                await PlayLoop(true);
+                await PlayLoop(true).ConfigureAwait(false);
 
             if (!playLoop)
-                await Stop();
+                await Stop().ConfigureAwait(false);
         }
 
         public async Task Stop()
@@ -128,7 +128,7 @@ namespace Chroma.NetCore.Api.Chroma
                 }
             }
 
-            await instance.DeleteEffect(effectIds);
+            await instance.DeleteEffect(effectIds).ConfigureAwait(false);
 
         }
        

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using Chroma.NetCore.Api.Chroma;
+using Chroma.NetCore.Tests.Base;
 using Xunit;
 
 namespace Chroma.NetCore.Api.Tests.Devices
@@ -23,13 +24,10 @@ namespace Chroma.NetCore.Api.Tests.Devices
         }
 
         [Fact]
-        public async void SetPosition_SetMousePadDifferentColors()
+        [Trait("Category", TraitCategory.UNIT_TEST)]
+        public void SetPosition_SetMousePadDifferentColors()
         {
-
-            var httpClient = await tests.Register_ReturnRegisteredClient();
             
-            httpClient.ClientMessage += HttpClientOnClientMessage;
-
             var container = new DeviceContainer();
             //For FireFly Chroma
             Assert.True(container.Mousepad.SetPosition(0, 0, Color.Orange));
@@ -43,13 +41,9 @@ namespace Chroma.NetCore.Api.Tests.Devices
         }
 
         [Fact]
-        public async void SetPosition_SetKeyPadDifferentColors()
+        [Trait("Category", TraitCategory.UNIT_TEST)]
+        public void SetPosition_SetKeyPadDifferentColors()
         {
-
-            var httpClient = await tests.Register_ReturnRegisteredClient();
-
-            httpClient.ClientMessage += HttpClientOnClientMessage;
-
             var container = new DeviceContainer();
 
             Assert.True(container.Keypad.SetPosition(0, 0, Color.Orange));
@@ -63,11 +57,9 @@ namespace Chroma.NetCore.Api.Tests.Devices
         }
 
         [Fact]
-        public async void SetPosition_SetMouseDifferentColors()
+        [Trait("Category", TraitCategory.UNIT_TEST)]
+        public void SetPosition_SetMouseDifferentColors()
         {
-
-            var httpClient = await tests.Register_ReturnRegisteredClient();
-            httpClient.ClientMessage += HttpClientOnClientMessage;
             var container = new DeviceContainer();
             
             //For DeathAdder Chroma Wheel
@@ -81,10 +73,10 @@ namespace Chroma.NetCore.Api.Tests.Devices
         }
 
         [Fact]
-        public async void SetPosition_SetKeyboardDifferentColors()
+        [Trait("Category", TraitCategory.UNIT_TEST)]
+        public void SetPosition_SetKeyboardDifferentColors()
         {
-            var httpClient = await tests.Register_ReturnRegisteredClient();
-            httpClient.ClientMessage += HttpClientOnClientMessage;
+
             var container = new DeviceContainer();
 
             Assert.True(container.Keyboard.SetPosition(1, 2, Color.Yellow));
@@ -98,10 +90,9 @@ namespace Chroma.NetCore.Api.Tests.Devices
         }
 
         [Fact]
-        public async void SetStatic_SetDifferentColors()
+        [Trait("Category", TraitCategory.UNIT_TEST)]
+        public void SetStatic_SetDifferentColors()
         {
-            var httpClient = await tests.Register_ReturnRegisteredClient();
-            httpClient.ClientMessage += HttpClientOnClientMessage;
             var container = new DeviceContainer();
 
             container.Keyboard.SetStatic(Color.Yellow);
@@ -110,10 +101,5 @@ namespace Chroma.NetCore.Api.Tests.Devices
             container.Mouse.SetStatic(Color.White);
         }
 
-
-        private void HttpClientOnClientMessage(HttpStatusCode httpStatusCode, string device, string s)
-        {
-           Console.WriteLine($"{httpStatusCode}:{device}:{s}");
-        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chroma.NetCore.Api", "src\Chroma.NetCore.Api\Chroma.NetCore.Api.csproj", "{EDAE9BA1-8006-4F5D-9317-CDF722D0EE7F}"
 EndProject
@@ -17,28 +17,43 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{9881
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChromaServer", "example\src\ChromaServer\ChromaServer.csproj", "{917ACD95-E57C-441E-8D05-9574170B3D87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChromaFormsApp", "example\src\WinFormsApp\ChromaFormsApp.csproj", "{D1D00F56-E307-4359-8CB3-D22D18764D69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		WinDebug|Any CPU = WinDebug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{EDAE9BA1-8006-4F5D-9317-CDF722D0EE7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EDAE9BA1-8006-4F5D-9317-CDF722D0EE7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDAE9BA1-8006-4F5D-9317-CDF722D0EE7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDAE9BA1-8006-4F5D-9317-CDF722D0EE7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDAE9BA1-8006-4F5D-9317-CDF722D0EE7F}.WinDebug|Any CPU.ActiveCfg = WinDebug|Any CPU
+		{EDAE9BA1-8006-4F5D-9317-CDF722D0EE7F}.WinDebug|Any CPU.Build.0 = WinDebug|Any CPU
 		{3ECEC03D-B1BE-4D25-86E7-DE9D7F68A467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3ECEC03D-B1BE-4D25-86E7-DE9D7F68A467}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ECEC03D-B1BE-4D25-86E7-DE9D7F68A467}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ECEC03D-B1BE-4D25-86E7-DE9D7F68A467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ECEC03D-B1BE-4D25-86E7-DE9D7F68A467}.WinDebug|Any CPU.ActiveCfg = WinDebug|Any CPU
+		{3ECEC03D-B1BE-4D25-86E7-DE9D7F68A467}.WinDebug|Any CPU.Build.0 = WinDebug|Any CPU
 		{4FDA8C32-3EF6-4F3F-85A8-5E65FA01F289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4FDA8C32-3EF6-4F3F-85A8-5E65FA01F289}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FDA8C32-3EF6-4F3F-85A8-5E65FA01F289}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FDA8C32-3EF6-4F3F-85A8-5E65FA01F289}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FDA8C32-3EF6-4F3F-85A8-5E65FA01F289}.WinDebug|Any CPU.ActiveCfg = WinDebug|Any CPU
+		{4FDA8C32-3EF6-4F3F-85A8-5E65FA01F289}.WinDebug|Any CPU.Build.0 = WinDebug|Any CPU
 		{917ACD95-E57C-441E-8D05-9574170B3D87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{917ACD95-E57C-441E-8D05-9574170B3D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{917ACD95-E57C-441E-8D05-9574170B3D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{917ACD95-E57C-441E-8D05-9574170B3D87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{917ACD95-E57C-441E-8D05-9574170B3D87}.WinDebug|Any CPU.ActiveCfg = WinDebug|Any CPU
+		{917ACD95-E57C-441E-8D05-9574170B3D87}.WinDebug|Any CPU.Build.0 = WinDebug|Any CPU
+		{D1D00F56-E307-4359-8CB3-D22D18764D69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1D00F56-E307-4359-8CB3-D22D18764D69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1D00F56-E307-4359-8CB3-D22D18764D69}.WinDebug|Any CPU.ActiveCfg = WinDebug|Any CPU
+		{D1D00F56-E307-4359-8CB3-D22D18764D69}.WinDebug|Any CPU.Build.0 = WinDebug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,5 +63,6 @@ Global
 		{3ECEC03D-B1BE-4D25-86E7-DE9D7F68A467} = {5C183158-7471-43FC-B297-99168970B2BE}
 		{4FDA8C32-3EF6-4F3F-85A8-5E65FA01F289} = {5C183158-7471-43FC-B297-99168970B2BE}
 		{917ACD95-E57C-441E-8D05-9574170B3D87} = {98814C96-93D3-4A7E-9A45-7476F165FFC9}
+		{D1D00F56-E307-4359-8CB3-D22D18764D69} = {98814C96-93D3-4A7E-9A45-7476F165FFC9}
 	EndGlobalSection
 EndGlobal

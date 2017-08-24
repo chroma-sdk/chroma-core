@@ -6,7 +6,6 @@ namespace Chroma.NetCore.Api.Interfaces
 {
     public interface IDevice
     {
-
         #region Properties
 
         string Device { get; }
@@ -27,9 +26,5 @@ namespace Chroma.NetCore.Api.Interfaces
         void SetNone();
 
         #endregion
-
-
-
-
     }
 }
