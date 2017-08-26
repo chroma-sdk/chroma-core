@@ -6,7 +6,7 @@ API for Razer Chroma SDK 2.x
 ## Examples
 To run the example server app:
 * clone the repository
-* Install Microsoft .Net Core SDK or Runtime >= 1.1 [Download](https://www.microsoft.com/net/download/core#/runtime)
+* Install Microsoft .Net Core SDK or Runtime >= 2.0 [Download](https://www.microsoft.com/net/download/core#/runtime)
 * goto example/src/ChromaServer
 * type dotnet restore
 * type dotnet run
