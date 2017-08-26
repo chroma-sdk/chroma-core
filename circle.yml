@@ -11,4 +11,4 @@ jobs:
       - checkout
       - run: dotnet restore
       - run: dotnet build
-      - run: dotnet test ./test/Chroma.NetCore.Api.Tests/Chroma.NetCore.Api.Tests.csproj --no-build --filter Category=UnitTest
+      - run: dotnet test ./test/Chroma.NetCore.Api.Tests/Chroma.NetCore.Api.Tests.csproj -v=n --no-build --filter Category=UnitTest
