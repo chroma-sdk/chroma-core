@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /temp
     docker:
-      - image: microsoft/dotnet:1.1.2-sdk-jessie
+      - image: microsoft/dotnet:2.0.0-sdk
     environment:
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
       DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -11,4 +11,4 @@ jobs:
       - checkout
       - run: dotnet restore
       - run: dotnet build
-      - run: dotnet test ./test/Chroma.NetCore.Api.Tests/Chroma.NetCore.Api.Tests.csproj --no-build --filter Category=UnitTest
+      - run: dotnet test ./test/Chroma.NetCore.Api.Tests/Chroma.NetCore.Api.Tests.csproj -v=n --no-build --filter Category=UnitTest
